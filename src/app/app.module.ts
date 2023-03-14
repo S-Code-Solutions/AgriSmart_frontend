@@ -38,6 +38,9 @@ import {MatInputModule} from "@angular/material/input";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -81,6 +84,9 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

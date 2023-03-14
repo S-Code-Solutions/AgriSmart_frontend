@@ -9,8 +9,9 @@ export class CropDTO{
   private _pesticide_type: string;
   private _crop_status: string;
   private _cost: string;
+  private _location: string;
 
-  constructor(crop_name: string, crop_variety: string, planting_date: string, harvest_date: string, expected_yield: string, soil_type: string, fertilizer_control: string, pesticide_type: string, crop_status: string, cost: string) {
+  constructor(crop_name: string, crop_variety: string, planting_date: string, harvest_date: string, expected_yield: string, soil_type: string, fertilizer_control: string, pesticide_type: string, crop_status: string, cost: string, location: string) {
     this._crop_name = crop_name;
     this._crop_variety = crop_variety;
     this._planting_date = planting_date;
@@ -21,6 +22,7 @@ export class CropDTO{
     this._pesticide_type = pesticide_type;
     this._crop_status = crop_status;
     this._cost = cost;
+    this._location = location;
   }
 
   get crop_name(): string {
@@ -101,5 +103,13 @@ export class CropDTO{
 
   set cost(value: string) {
     this._cost = value;
+  }
+
+  get location(): string {
+    return this._location;
+  }
+
+  set location(value: string) {
+    this._location = value;
   }
 }

@@ -1,15 +1,15 @@
 <section>
 
-  <h3>Crop Management</h3>
+  <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Crop Management</h3>
 
-<section class="row container mt-5 mb-5">
+<section class="row container mt-4 mb-5">
 
-  <button mat-raised-button class="col-6 col-sm-3 me-4 ms-4" style="width: 202px; height: 50px">
-    <mat-icon aria-hidden="false" class="me-2" aria-label="Example add icon" fontIcon="add">add</mat-icon>
+  <button mat-raised-button (click)="toggleComponent()" class="col-6 col-sm-3 me-4 ms-4" style="width: 202px; height: 50px; border: 2px solid #2ecc71">
+    <mat-icon aria-hidden="false" class="me-2" aria-label="Example add icon" fontIcon="add" >add</mat-icon>
     Add New Crop
   </button>
 
-  <button mat-button class="col-6 col-sm-3 me-4" [matMenuTriggerFor]="belowMenu" style="width: 150px; height: 50px">
+  <button mat-button class="col-6 col-sm-3 me-4" [matMenuTriggerFor]="belowMenu" style="width: 150px; height: 50px;border: 2px solid #2ecc71">
     Select the Crop
     <mat-icon aria-hidden="false" class="ms-2" aria-label="Example expand_more icon" fontIcon="expand_more">expand_more</mat-icon>
   </button>
@@ -21,9 +21,17 @@
 
 </section>
 
-  <section>
+  <div class="loading zindx text-center" *ngIf="loading">
+    <div class="loadingio-spinner-spinner-wn30tkp86n8"><div class="ldio-2j76th0o3zf">
+      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div></div>
+  </div>
 
-    <h3>Add New Crop</h3>
+<section class="add-new-feature" *ngIf="!loading && showComponent">
+
+<section>
+
+    <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Add New Crop</h3>
 
     <div>
 
@@ -176,51 +184,717 @@
 
   </section>
 
-<!--<section class="row">-->
-<!--  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex flex-wrap justify-content-around">-->
-<!--    <div style="background: #ff5e14 ;width: 200px; height: 200px"-->
-<!--         class="d-flex flex-column align-items-center text-center">-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 d-flex flex-wrap justify-content-around">-->
-<!--    <div style="background: #3B5998 ;width: 200px; height: 200px"-->
-<!--         class="d-flex flex-column align-items-center text-center">-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
-
-<table mat-table datatable [dtOptions]="dtOptions" [dataSource]="dataSource" class="row-border hover mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions" matSort #sort="matSort">
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  <ng-container matColumnDef="crop_name">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_name}} </td>
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  <ng-container matColumnDef="crop_variety">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_variety </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_variety}} </td>
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Weight </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+  <ng-container matColumnDef="planting_date">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_date </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_date}} </td>
   </ng-container>
 
   <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol </th>
-    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+  <ng-container matColumnDef="harvest_date">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_date </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_date}} </td>
   </ng-container>
 
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="expected_yield">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> expected_yield </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.expected_yield}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="soil_type">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> soil_type </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.soil_type}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fertilizer_control">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_control </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_control}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="pesticide_type">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> pesticide_type </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.pesticide_type}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="crop_status">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_status </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_status}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="cost">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> cost </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.cost}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> location </th>
+    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.location}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="action" >
+    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px"> Action</th>
+    <td mat-cell *matCellDef="let element" class="form-table-column text-center">
+      <div   class="w-auto pr-4 flex justify-start">
+        <button class="btn-rounded btn-primary" (click)="updateProduct(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        &nbsp;
+        &nbsp;
+        <button class="btn-rounded btn-danger" (click)="deleteProduct(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+
+
+  <!-- Custom row definitions to be provided to the wrapper table. -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
 </table>
+
+</section>
+
+  <section class="schedule-section" *ngIf="!loading && showSchedule">
+
+    <h3 class="me-3 mt-4 mb-4">Crop - {{cropName}} Details</h3>
+
+    <section class="schedule-forms">
+
+      <mat-tab-group dynamicHeight>
+
+        <mat-tab label="Planting Details">
+          <div class="example-large-box mat-elevation-z4">
+
+            <form #form (ngSubmit)="savePSchedule()" [formGroup]="plantingScheduleForm" class="form-container">
+
+              <div class="form-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Crop name</mat-label>
+                  <input  matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Planting location</mat-label>
+                  <input  matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                <mat-label>Planting density</mat-label>
+                <input type="text"
+                       placeholder="Planting density"
+                       aria-label="planting_density"
+                       matInput
+                       formControlName="planting_density"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of planting_density" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+                </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                <mat-label>Seeding rate</mat-label>
+                <input type="text"
+                       placeholder="Seeding rate"
+                       aria-label="seeding_rate"
+                       matInput
+                       formControlName="seeding_rate"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of seeding_rate" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+                  </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                <mat-label>Seeding depth</mat-label>
+                <input type="text"
+                       placeholder="Seeding depth"
+                       aria-label="seeding_depth"
+                       matInput
+                       formControlName="seeding_depth"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of seeding_depth" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-autocomplete>
+                </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline">
+                  <mat-label>Planting method</mat-label>
+                  <input type="text"
+                         placeholder="Planting method"
+                         aria-label="planting_method"
+                         matInput
+                         formControlName="planting_method"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of planting_method" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                  </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Soil preparation</mat-label>
+                  <input type="text"
+                         placeholder="Soil preparation"
+                         aria-label="planting_method"
+                         matInput
+                         formControlName="soil_preparation"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of soil_preparation" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Planting date</mat-label>
+                  <input matInput formControlName="planting_date" [matDatepicker]="planting_date">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="planting_date"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #planting_date></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Fertilizing Details">
+          <div class="example-large-box mat-elevation-z4">
+
+            <form #form (ngSubmit)="saveFSchedule()" [formGroup]="fertilizingScheduleForm" class="form-container">
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Crop name</mat-label>
+                  <input  matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fertilizer type</mat-label>
+                  <input  matInput formControlName="fertilizer_type" placeholder="fertilizer_type" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fertilizer application method</mat-label>
+                  <input  matInput formControlName="fertilizer_app_method" placeholder="fertilizer_app_method" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fertilizer application frequency</mat-label>
+                  <input  matInput formControlName="fertilizer_app_fre" placeholder="fertilizer_app_fre" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Application rate</mat-label>
+                  <input  matInput formControlName="application_rate" placeholder="application_rate" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fertilizer placement</mat-label>
+                  <input  matInput formControlName="fertilizer_placement" placeholder="fertilizer_placement" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Application timing</mat-label>
+                  <input  matInput formControlName="application_timing" placeholder="application_timing" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Fertigation</mat-label>
+                  <input  matInput formControlName="fertigation" placeholder="fertigation" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Fertilizing date</mat-label>
+                <input matInput formControlName="fertlizing_date" [matDatepicker]="fertlizing_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="fertlizing_date"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #fertlizing_date></mat-datepicker>
+              </mat-form-field>
+
+              </div>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Harvesting Details">
+          <div class="example-large-box mat-elevation-z4">
+
+            <form #form (ngSubmit)="saveHSchedule()" [formGroup]="harvestingScheduleForm" class="form-container">
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Crop name</mat-label>
+                  <input  matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvest method</mat-label>
+                  <input  matInput formControlName="harvest_method" placeholder="harvest_method" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvesting equipment</mat-label>
+                  <input  matInput formControlName="harvesting_equipment" placeholder="harvesting_equipment" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Labor requirement</mat-label>
+                  <input  matInput formControlName="labor_requirement" placeholder="labor_requirement" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Storage requirement</mat-label>
+                  <input  matInput formControlName="storage_requirement" placeholder="storage_requirement" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvest quality</mat-label>
+                  <input  matInput formControlName="harvest_quality" placeholder="harvest_quality" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>market_destination</mat-label>
+                  <input  matInput formControlName="market_destination" placeholder="market_destination" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Post-harvest handling</mat-label>
+                  <input  matInput formControlName="post_harvest_handling" placeholder="post_harvest_handling" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Yield analysis</mat-label>
+                  <input  matInput formControlName="yield_analysis" placeholder="yield_analysis" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Crop maturity</mat-label>
+                  <input  matInput formControlName="crop_maturity" placeholder="crop_maturity" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvest labor cost</mat-label>
+                  <input  matInput formControlName="harvest_labor_cost" placeholder="harvest_labor_cost" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvest transport</mat-label>
+                  <input  matInput formControlName="harvest_transport" placeholder="harvest_transport" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvest waste</mat-label>
+                  <input  matInput formControlName="harvest_waste" placeholder="harvest_waste" ngDefaultControl >
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Harvesting date</mat-label>
+                  <input matInput formControlName="harvesting_date" [matDatepicker]="harvesting_date">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="harvesting_date"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #harvesting_date></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+
+    </section>
+
+    <h3 class="me-3 mt-4 mb-4">Crop - {{cropName}} Schedule Tables</h3>
+
+    <section class="scedule-tables">
+      <mat-tab-group dynamicHeight>
+        <mat-tab label="Planting Details Table">
+          <div class="example-large-box mat-elevation-z4">
+            <table mat-table [dataSource]="plantingdataSource" class="row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions" matSort #sort="matSort">
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="crop_name">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_name}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="planting_location">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_location </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_location}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="planting_density">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_density </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_density}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="seeding_rate">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> seeding_rate </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.seeding_rate}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="seeding_depth">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> seeding_depth </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.seeding_depth}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="planting_method">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_method </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_method}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="soil_preparation">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> soil_preparation </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.soil_preparation}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="planting_date">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_date </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_date}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action" >
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px"> Action</th>
+                <td mat-cell *matCellDef="let element" class="form-table-column text-center">
+                  <div   class="w-auto pr-4 flex justify-start">
+                    <button class="btn-rounded btn-primary" (click)="updatePlanting(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    &nbsp;
+                    &nbsp;
+                    <button class="btn-rounded btn-danger" (click)="deletePlanting(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+
+
+              <!-- Custom row definitions to be provided to the wrapper table. -->
+              <tr mat-header-row *matHeaderRowDef="displayedPlantingColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedPlantingColumns;"></tr>
+
+            </table>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Fertilizing Details Table">
+          <div class="example-large-box mat-elevation-z4">
+            <table mat-table [dataSource]="fertilizingdataSource" class="row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions" matSort #sort="matSort">
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="crop_name">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_name}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="fertilizer_type">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_type </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_type}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="fertilizer_app_method">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_app_method </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_app_method}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="fertilizer_app_fre">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_app_fre </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_app_fre}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="application_rate">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> application_rate </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.application_rate}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="fertilizer_placement">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_placement </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_placement}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="application_timing">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> application_timing </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.application_timing}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="fertigation">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertigation </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertigation}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="fertlizing_date">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertlizing_date </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertlizing_date}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action" >
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px"> Action</th>
+                <td mat-cell *matCellDef="let element" class="form-table-column text-center">
+                  <div   class="w-auto pr-4 flex justify-start">
+                    <button class="btn-rounded btn-primary" (click)="updateFertilize(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    &nbsp;
+                    &nbsp;
+                    <button class="btn-rounded btn-danger" (click)="deleteFertilize(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+
+
+              <!-- Custom row definitions to be provided to the wrapper table. -->
+              <tr mat-header-row *matHeaderRowDef="displayedFertilizingColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedFertilizingColumns;"></tr>
+
+            </table>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Harvesting Details Table">
+          <div class="example-large-box mat-elevation-z4">
+            <table mat-table [dataSource]="harvestingdataSource" class="row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions" matSort #sort="matSort">
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="crop_name">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_name}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="harvest_method">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_method </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_method}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="harvesting_equipment">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvesting_equipment </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvesting_equipment}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="labor_requirement">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> labor_requirement </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.labor_requirement}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="storage_requirement">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> storage_requirement </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.storage_requirement}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvest_quality">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_quality </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_quality}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="market_destination">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> market_destination </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.market_destination}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="post_harvest_handling">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> post_harvest_handling </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.post_harvest_handling}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="yield_analysis">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> yield_analysis </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.yield_analysis}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="crop_maturity">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_maturity </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_maturity}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvest_labor_cost">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_labor_cost </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_labor_cost}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvest_transport">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_transport </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_transport}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvest_waste">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_waste </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_waste}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvesting_date">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvesting_date </th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvesting_date}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action" >
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px"> Action</th>
+                <td mat-cell *matCellDef="let element" class="form-table-column text-center">
+                  <div   class="w-auto pr-4 flex justify-start">
+                    <button class="btn-rounded btn-primary" (click)="updateHarvest(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    &nbsp;
+                    &nbsp;
+                    <button class="btn-rounded btn-danger" (click)="deleteHarvest(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+
+
+              <!-- Custom row definitions to be provided to the wrapper table. -->
+              <tr mat-header-row *matHeaderRowDef="displayedHarvestingColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedHarvestingColumns;"></tr>
+
+            </table>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </section>
+
+  </section>
+
 
 </section>

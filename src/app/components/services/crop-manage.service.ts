@@ -22,7 +22,7 @@ export class CropManageService {
     return this.http.get<any>(this.baseUrl+'/getall', {
       headers:new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg3NTIzMjQsImlhdCI6MTY3ODczNDMyNH0.Pl2pt80MdrLe_BAsNfvOl7WcH2_X-IL5pdz4h-QgTDdb-sU5k8CRVXpPBkEcCNdauhTGlwQ-a3yv0LxbWsue6Q'
+        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg4MzMyNjksImlhdCI6MTY3ODgxNTI2OX0.xAG_xbh9O7RUExv-HY2qOp1I9CF_uI4TohoMm_8jmtthz-ciSMmb8krKOYy1INUYrYb07K70edIATZJVBOBToA'
       })
     })
   }
@@ -39,10 +39,11 @@ export class CropManageService {
       pesticide_type: complaintDTO.pesticide_type,
       crop_status: complaintDTO.crop_status,
       cost: complaintDTO.cost,
+      location: complaintDTO.location,
     }, {
       headers:new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg3NTIzMjQsImlhdCI6MTY3ODczNDMyNH0.Pl2pt80MdrLe_BAsNfvOl7WcH2_X-IL5pdz4h-QgTDdb-sU5k8CRVXpPBkEcCNdauhTGlwQ-a3yv0LxbWsue6Q'
+        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg4MzMyNjksImlhdCI6MTY3ODgxNTI2OX0.xAG_xbh9O7RUExv-HY2qOp1I9CF_uI4TohoMm_8jmtthz-ciSMmb8krKOYy1INUYrYb07K70edIATZJVBOBToA'
       })
     })
   }
