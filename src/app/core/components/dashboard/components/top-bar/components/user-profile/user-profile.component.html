@@ -1,0 +1,24 @@
+<form class="d-flex ms-3" >
+  <div id="wrap-2" [matMenuTriggerFor]="menu" >
+    <div class="example-button-container ">
+      <button class="btn-login2 d-flex justify-content-center align-items-center" mat-fab color="Basic"  type="button">
+        <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
+      </button>
+
+
+
+    </div>
+  </div>
+  <mat-menu #menu="matMenu" >
+    <!--    <div mat-menu-item class="btn-login" >-->
+    <!--      <button  mat-icon-button aria-label="profile" [routerLink]="'./userProfile'" routerLinkActive="buttonActive" style="margin-left: -15px; width: 150px">-->
+    <!--        <mat-icon style="margin-right: 15px">person</mat-icon>Profile-->
+    <!--      </button>-->
+    <!--    </div>-->
+    <div mat-menu-item class="btn-login">
+      <button  mat-icon-button aria-label="Logout" (click)="logout()" routerLinkActive="buttonActive" style="margin-left: -15px; width: 150px">
+        <mat-icon style="margin-right: 15px">logout</mat-icon>Logout
+      </button>
+    </div>
+  </mat-menu>
+</form>

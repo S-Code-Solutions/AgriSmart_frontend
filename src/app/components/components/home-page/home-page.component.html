@@ -1,0 +1,35 @@
+<section class="container-fluid mt-2">
+  <div>
+    <owl-carousel-o [options]="advertisementsOptions">
+
+      <ng-container *ngFor="let slide of slidesStore">
+        <ng-template carouselSlide [id]="slide.id">
+          <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title" style="background-repeat: no-repeat;background-size: cover;">
+        </ng-template>
+      </ng-container>
+
+    </owl-carousel-o>
+  </div>
+</section>
+<section class="row">
+  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex flex-wrap justify-content-around">
+    <div style="background: #ff5e14 ;width: 200px; height: 200px"
+         class="d-flex flex-column align-items-center text-center">
+
+    </div>
+  </div>
+  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex flex-wrap justify-content-around">
+    <div style="background: #3B5998 ;width: 200px; height: 200px"
+         class="d-flex flex-column align-items-center text-center">
+
+    </div>
+  </div>
+  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex flex-wrap justify-content-around">
+    <div style="background: #ff5e14 ;width: 200px; height: 200px"
+         class="d-flex flex-column align-items-center text-center">
+
+    </div>
+  </div>
+</section>
+
+

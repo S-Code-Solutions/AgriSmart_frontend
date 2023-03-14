@@ -1,0 +1,36 @@
+<mat-sidenav-container #sidenavContainer class="shadow-none" style="height: 91.5%;">
+  <mat-sidenav [opened]="navState" class="bg-skin-secondary shadow-2xl" mode="side">
+    <mat-nav-list >
+
+      <mat-list-item [routerLink]="'./homepage'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faHome" class="side-btn-icon "></fa-icon>&nbsp;Home
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./cropmgt'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faLaptopHouse" class="side-btn-icon "></fa-icon>&nbsp;Manage Crops
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./predict'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faShoppingCart" class="side-btn-icon "></fa-icon>&nbsp;Predict Analysis
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./weather'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faMoneyBill" class="side-btn-icon "></fa-icon>&nbsp;Weather Forecast
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./finance'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faTruck" class="side-btn-icon "></fa-icon>&nbsp;Finance Management
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./colabfc'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faComment" class="side-btn-icon "></fa-icon>&nbsp;Colab F & C
+      </mat-list-item>
+      <mat-list-item [routerLink]="'./report'" role="listitem" routerLinkActive="buttonActive">
+        <fa-icon [icon]="faChartBar" class="side-btn-icon "></fa-icon>&nbsp;Reports
+      </mat-list-item>
+
+    </mat-nav-list>
+
+
+  </mat-sidenav>
+  <mat-sidenav-content [@routeAnimations]="getRouteAnimationData(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
