@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HomeService} from "../../services/home.service";
 import {OwlOptions} from "ngx-owl-carousel-o";
 
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',

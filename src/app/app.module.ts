@@ -41,6 +41,10 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTabsModule} from "@angular/material/tabs";
+import { CRecommendComponent } from './components/components/predict-anly/crop/c-recommend/c-recommend.component';
+import { CResultComponent } from './components/components/predict-anly/crop/c-result/c-result.component';
+import { FRecommendComponent } from './components/components/predict-anly/fertilizer/f-recommend/f-recommend.component';
+import { FResultComponent } from './components/components/predict-anly/fertilizer/f-result/f-result.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +64,10 @@ import {MatTabsModule} from "@angular/material/tabs";
     FinanceMgtComponent,
     ColabFnCComponent,
     ReportComponent,
+    CRecommendComponent,
+    CResultComponent,
+    FRecommendComponent,
+    FResultComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +94,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatNativeDateModule,
     MatSortModule,
     MatPaginatorModule,
-    MatTabsModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

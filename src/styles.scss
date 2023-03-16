@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
-
+@import "~@flaticon/flaticon-uicons/css/all/all";
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +16,7 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  //font-family: 'Roboto', sans-serif;
 }
 
 html, body {
@@ -25,7 +25,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  //font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -71,8 +71,8 @@ body {
 
 @layer base {
   :root {
-    --bg-primary: #27ae60;
-    --bg-primary-light: #2ecc71;
+    --bg-primary: #1C8727;
+    --bg-primary-light: #209F2E;
     --bg-secondary: #f5f1f1;
     --bg-ternary: #FFFFFF;
     --bg-form: #ffffff;
@@ -80,7 +80,7 @@ body {
     --bg-danger-light: #ffb8b8;
     --bg-generic-one: rgba(20, 20, 20);
     --bg-genaric-two: rgba(20, 20, 20);
-    --bg-blues:#00b894;
+    --bg-blues:#37A844;
     --txt-primary: #383737;
     --txt-danger: #e74c3c;
     --txt-light: #ffffff;

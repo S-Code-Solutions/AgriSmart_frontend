@@ -37,7 +37,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  showComponent = false;
+  showComponent = true;
   showSchedule = false;
   loading = false;
   cropName!:any;

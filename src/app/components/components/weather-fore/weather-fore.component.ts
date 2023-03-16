@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WeatherForeComponent implements OnInit {
 
+  showLoader: boolean = true;
+
+
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.showLoader = false;
+    }, 2000); // 2 second delay before showing the component
   }
 
 }
