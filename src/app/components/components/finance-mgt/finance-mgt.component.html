@@ -1,11 +1,437 @@
-<!-- TradingView Widget BEGIN -->
-<section id="tv-ticker-tape">
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright">
-    <a href="https://www.tradingview.com/markets/" rel="noopener" target="_blank">
-      <span class="blue-text">Markets today</span></a> by TradingView</div>
+<section>
 
-</div>
+  <h3 style="font-family: 'Inter'; font-size: 29px;color: #209F2E" class="mt-3 ms-4">Financial Management</h3>
+
+  <!-- TradingView Widget BEGIN -->
+  <section id="tv-ticker-tape">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <div class="tradingview-widget-copyright">
+        <a href="https://www.tradingview.com/markets/" rel="noopener" target="_blank">
+          <span class="blue-text">Markets today</span></a> by TradingView
+      </div>
+
+    </div>
+  </section>
+  <!-- TradingView Widget END -->
+
+  <section class="d-flex flex-row">
+
+    <div>
+      <button mat-raised-button class=" p-2 ms-3" (click)="livestock()" style="background: #1C8727; color: white">Crop and livestock
+        accounting:
+      </button>
+    </div>
+
+    <div>
+      <button mat-raised-button class="p-2 ms-3" (click)="budgeting()" style="background: #1C8727; color: white">Budgeting and forecasting:
+      </button>
+    </div>
+
+    <div>
+      <button mat-raised-button class="p-2 ms-3" (click)="LoanMgt()" style="background: #1C8727; color: white">Loan management:</button>
+    </div>
+
+  </section>
+
+  <section>
+
+    <mat-tab-group dynamicHeight>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Crop Name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Seed expence</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Fertilizer expence</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Pests Expence</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Labour expence</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Equipment expence</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Total Expense</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Expense Type</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Type Name</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Bought Date</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Type Qty</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Total</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Labour name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Task</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Time Duration</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Payment</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Customer name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Crop Name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Last Stock</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Unit Price</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Sold Stock</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Sold Date</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Total</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Current Stock</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Revenue</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+
+    </mat-tab-group>
+
+
+  </section>
+
+  <section>
+
+    <mat-tab-group dynamicHeight>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Crop Name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Last expense</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Last Revenue</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Last Date</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Expect Expense</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Expect Revenue</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Expect Date</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+      </mat-tab-group>
+
+    </section>
+
+  <section>
+
+    <mat-tab-group dynamicHeight>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Lender name</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Lender contact</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Loan purpose</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Amount borrowed</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Interest rate</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Due date</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Long tab">
+        <div class="example-large-box mat-elevation-z4">
+          <form #form (ngSubmit)="saveLAccount()" [formGroup]="liveaccountForm" class="form-container">
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Loan Id</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Amount borrowed</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Interest rate</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Time Period</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Payment amount</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Rest Amount</mat-label>
+                <input matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl>
+              </mat-form-field>
+
+            </div>
+
+            <div class="form-row">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Due date</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Payment status</mat-label>
+                <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+              </mat-form-field>
+
+
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </section>
+
 </section>
-<!-- TradingView Widget END -->
+
+
