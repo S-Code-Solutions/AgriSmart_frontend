@@ -10,11 +10,27 @@ import {MatPaginator} from "@angular/material/paginator";
 import {PlantingDTO} from "../../dto/PlantingDTO";
 import {FertilizingDTO} from "../../dto/FertilizingDTO";
 import {HarvestingDTO} from "../../dto/HarvestingDTO";
+import {DatePipe} from "@angular/common";
+import {MatDatepicker, MatDatepickerInput} from "@angular/material/datepicker";
+import {PlantDTO} from "../../dto/PlantDTO";
+import {Plant_DetailDTO} from "../../dto/Plant_DetailDTO";
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: "YYYY-MM-DD HH:mm:ss"
+  },
+  display: {
+    dateInput: "YYYY-MM-DD HH:mm:ss",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "YYYY-MM-DD HH:mm:ss",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
 
 @Component({
   selector: 'app-crop-manage',
   templateUrl: './crop-manage.component.html',
-  styleUrls: ['./crop-manage.component.scss']
+  styleUrls: ['./crop-manage.component.scss'],
 })
 
 export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
@@ -37,8 +53,8 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  showComponent = true;
-  showSchedule = false;
+  showComponent = false;
+  showSchedule = true;
   loading = false;
   cropName!:any;
 
@@ -50,6 +66,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   soil_preparation: string[] = ['Tilling', 'Adding compost','Leveling '];
   plantingdataSource!: MatTableDataSource<Array<PlantingDTO>>;
   displayedPlantingColumns: string[] = ['crop_name', 'planting_location', 'planting_density', 'seeding_rate', 'seeding_depth', 'planting_method','soil_preparation','planting_date', 'action'];
+  @ViewChild('planting_date_picker') planting_date_picker!: MatDatepicker<MatDatepickerInput<Date>>;
 
 
   fertilizingScheduleForm!: FormGroup;
@@ -62,45 +79,12 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   displayedHarvestingColumns: string[] = ['crop_name', 'harvest_method', 'harvesting_equipment', 'labor_requirement', 'storage_requirement', 'harvest_quality','market_destination','post_harvest_handling', 'yield_analysis', 'crop_maturity', 'harvest_labor_cost', 'harvest_transport', 'harvest_waste', 'harvesting_date', 'action'];
 
 
-  constructor(private cropManageService:CropManageService) {
+  constructor(private cropManageService:CropManageService, private datePipe: DatePipe) {
     // this.dataSource = new MatTableDataSource(this.components);
   }
 
 
   ngOnInit(): void {
-    // this.dtOptions = {
-    //   pagingType: "full_numbers",
-    //   serverSide: false,
-    //   processing: true,
-    //   deferRender: true,
-    //   lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Tous']],
-    //   order: [[1, 'desc']],
-    //   // Declare the use of the extension in the dom parameter
-    //   dom: 'Blfrtip',
-    //   stateSave: true,
-    //   columns: [
-    //     { data: "crop_name" },
-    //     { data: "crop_variety" },
-    //     { data: "planting_date" },
-    //     { data: "harvest_date" },
-    //     { data: "expected_yield" },
-    //     { data: "soil_type" },
-    //     { data: "fertilizer_control" },
-    //     { data: "pesticide_type" },
-    //     { data: "crop_status" },
-    //     { data: "cost" },
-    //     { data: "location" },
-    //     { data: "action" }
-    //   ],
-    //   columnDefs: [
-    //     {
-    //       targets: 0,
-    //       searchable: true,
-    //       orderable: false,
-    //       className: "dt-body-center"
-    //     }
-    //     ]
-    // };
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -115,38 +99,17 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       crop_variety: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')
       ]),
-      planting_date: new FormControl('', [
-        Validators.required,
-      ]),
-      harvest_date: new FormControl('', [
-        Validators.required,
-      ]),
-      expected_yield: new FormControl('', [
-        Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)
-      ]),
-      soil_type: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
-      ]),
-      fertilizer_control: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')
-      ]),
-      pesticide_type: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')
-      ]),
       crop_status: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z]+$')
-      ]),
-      cost: new FormControl('', [
-        Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)
-      ]),
-      location: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
-      ]),
+      ])
     });
 
     this.plantingScheduleForm = new FormGroup({
       crop_name: new FormControl('', [
         Validators.required,
+      ]),
+      plantMethod: new FormControl('', [
+        Validators.required, Validators.pattern('^[a-zA-Z]+$')
       ]),
       planting_location: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z]+$')
@@ -160,14 +123,14 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       seeding_depth: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z]+$')
       ]),
-      planting_method: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
-      ]),
       soil_preparation: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z]+$')
       ]),
       planting_date: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required
+      ]),
+      water_duration: new FormControl('', [
+        Validators.required
       ]),
     })
 
@@ -246,7 +209,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       ]),
     })
 
-    this.refreshTable();
+    // this.refreshTable();
 
     this.dataSource = new MatTableDataSource(this.ofListofCrops);
     // this.dataSource.sort = this.sort;
@@ -262,7 +225,34 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
 
   ngAfterViewInit(): void {
-    this.refreshTable();
+    // this.refreshTable();
+  }
+
+  previewUrl!: any | ArrayBuffer | null;
+  isLoading: boolean = false;
+  imageUrl!: string;
+
+  // onFileSelected(event: any): void {
+  //   this.isLoading = true;
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = (event) => {
+  //     console.log(event.target)
+  //     // if (!(event.target != null)) {
+  //     //   this.previewUrl = event.target.result;
+  //     //   this.isLoading = false;
+  //     // }
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
 
@@ -271,15 +261,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
     this.cropManageService.saveCrop(new CropDTO(
       this.cropDetailsForm.get('crop_name')?.value,
       this.cropDetailsForm.get('crop_variety')?.value,
-      this.cropDetailsForm.get('planting_date')?.value,
-      this.cropDetailsForm.get('harvest_date')?.value,
-      this.cropDetailsForm.get('expected_yield')?.value,
-      this.cropDetailsForm.get('soil_type')?.value,
-      this.cropDetailsForm.get('fertilizer_control')?.value,
-      this.cropDetailsForm.get('pesticide_type')?.value,
-      this.cropDetailsForm.get('crop_status')?.value,
-      this.cropDetailsForm.get('cost')?.value,
-      this.cropDetailsForm.get('location')?.value,
+      this.cropDetailsForm.get('crop_status')?.value
     )).subscribe(result => {
       console.log("Crop Successfully Added")
       console.log(result)
@@ -287,7 +269,8 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
         position: 'center-bottom'
       });
     }, error => {
-      Notiflix.Notify.failure(error,{
+      console.log(error)
+      Notiflix.Notify.failure("Crop-Variety Already Exists",{
         position: 'center-bottom'
       });
     });
@@ -365,7 +348,47 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   savePSchedule() {
+    this.cropManageService.savePlant(new PlantDTO(
+      this.plantingScheduleForm.get('plantMethod')?.value,
+      ''
+    )).subscribe(result => {
+      console.log(result)
+      // this.savePsub()
+      // console.log("Plant details Successfully Added")
+      // console.log(result)
+      // Notiflix.Notify.success('Planting details Successfully Added',{
+      //   position: 'center-bottom'
+      // });
+    }, error => {
+      Notiflix.Notify.failure(error,{
+        position: 'center-bottom'
+      });
+    });
+  }
 
+  savePsub() {
+    this.cropManageService.savePlantDetails(new Plant_DetailDTO(
+      this.plantingScheduleForm.get('plantMethod')?.value,
+      this.plantingScheduleForm.get('planting_location')?.value,
+      this.plantingScheduleForm.get('planting_density')?.value,
+      this.plantingScheduleForm.get('seeding_rate')?.value,
+      this.plantingScheduleForm.get('seeding_depth')?.value,
+      this.plantingScheduleForm.get('soil_preparation')?.value,
+      this.plantingScheduleForm.get('planting_date')?.value,
+      this.plantingScheduleForm.get('water_duration')?.value,
+      '',
+      ''
+    )).subscribe(result => {
+      console.log("Plant details Successfully Added")
+      console.log(result)
+      Notiflix.Notify.success('Planting details Successfully Added',{
+        position: 'center-bottom'
+      });
+    }, error => {
+      Notiflix.Notify.failure(error,{
+        position: 'center-bottom'
+      });
+    });
   }
 
   saveFSchedule() {

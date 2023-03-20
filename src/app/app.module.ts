@@ -45,6 +45,7 @@ import { CRecommendComponent } from './components/components/predict-anly/crop/c
 import { CResultComponent } from './components/components/predict-anly/crop/c-result/c-result.component';
 import { FRecommendComponent } from './components/components/predict-anly/fertilizer/f-recommend/f-recommend.component';
 import { FResultComponent } from './components/components/predict-anly/fertilizer/f-result/f-result.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -95,8 +96,9 @@ import { FResultComponent } from './components/components/predict-anly/fertilize
     MatSortModule,
     MatPaginatorModule,
     MatTabsModule
+
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

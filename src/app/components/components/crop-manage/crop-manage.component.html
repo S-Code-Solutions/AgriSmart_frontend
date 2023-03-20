@@ -22,268 +22,207 @@
 </section>
 
   <div class="loading zindx text-center" *ngIf="loading">
-    <div class="loadingio-spinner-spinner-wn30tkp86n8"><div class="ldio-2j76th0o3zf">
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-    </div></div>
+    <img src="http://themepanthers.com/wp/lawnella/elementor/wp-content/themes/lawnella/assets/img/preloader.gif">
+<!--    <div class="loadingio-spinner-spinner-wn30tkp86n8"><div class="ldio-2j76th0o3zf">-->
+<!--      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>-->
+<!--    </div></div>-->
   </div>
 
-<section class="add-new-feature" *ngIf="!loading && !showSchedule && showComponent">
+  <section class="add-new-feature" *ngIf="!loading && !showSchedule && showComponent">
 
-<section>
+          <section>
 
-    <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Add New Crop</h3>
+            <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Add New Crop</h3>
 
-    <div>
+            <div>
 
-      <form #form (ngSubmit)="saveCrop()" [formGroup]="cropDetailsForm" class="form-container">
-        <div>
-          <div class="form-row">
-            <mat-form-field appearance="outline">
-              <mat-label>Crop name</mat-label>
-              <input  matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl >
-            </mat-form-field>
+              <form #form (ngSubmit)="saveCrop()" [formGroup]="cropDetailsForm" class="form-container">
 
-            <mat-form-field appearance="outline">
-              <mat-label>Crop Variety</mat-label>
-              <input type="text"
-                     placeholder="Crop Variety"
-                     aria-label="crop_variety"
-                     matInput
-                     formControlName="crop_variety"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let variety of crop_varieties" [value]="variety">
-                  {{variety}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
+                <div>
 
-          <div class="form-row">
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Crop name</mat-label>
+                      <input matInput formControlName="crop_name" placeholder="crop_name" ngDefaultControl>
+                    </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Planting date</mat-label>
-              <input matInput formControlName="planting_date" [matDatepicker]="planting_date">
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="planting_date"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #planting_date></mat-datepicker>
-            </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Crop Variety</mat-label>
+                      <input type="text"
+                             placeholder="Crop Variety"
+                             aria-label="crop_variety"
+                             matInput
+                             formControlName="crop_variety"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let variety of crop_varieties" [value]="variety">
+                          {{variety}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Harvest date(Est.)</mat-label>
-              <input matInput formControlName="harvest_date" [matDatepicker]="harvest_date">
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="harvest_date"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #harvest_date></mat-datepicker>
-            </mat-form-field>
+                  </div>
 
-          </div>
+                  <div class="form-row">
 
-          <div class="form-row">
+<!--                    <img [src]="previewUrl" *ngIf="previewUrl" alt="img">-->
+<!--                    <mat-form-field appearance="outline">-->
+<!--                        <mat-label>Image</mat-label>-->
+<!--                        <input type="file" formControlName="fileInputControl" (change)="onFileSelected($event)">-->
+<!--                        <mat-icon matSuffix>folder</mat-icon>-->
+<!--                      </mat-form-field>-->
 
-            <mat-form-field appearance="outline">
-              <mat-label>Expected yield(Kg)</mat-label>
-              <input  matInput formControlName="expected_yield" placeholder="expected_yield" >
-            </mat-form-field>
+<!--                    <mat-form-field>-->
+<!--                      <mat-label>Select an image file</mat-label>-->
+<!--                      <input type="file" (change)="onFileSelected($event)">-->
+<!--                    </mat-form-field>-->
+<!--                    <br>-->
+<!--                    <img *ngIf="imageUrl" [src]="imageUrl" height="200">-->
 
-            <mat-form-field appearance="outline">
-              <mat-label>Soil type</mat-label>
-              <input type="text"
-                     placeholder="Soil type"
-                     aria-label="soil_type"
-                     matInput
-                     formControlName ="soil_type"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let type of soil_types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
 
-          </div>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Crop Status</mat-label>
+                      <input type="text"
+                             placeholder="Crop Status"
+                             aria-label="crop_status"
+                             matInput
+                             formControlName="crop_status"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let type of crop_status_types" [value]="type">
+                          {{type}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
 
-          <div class="form-row">
+                  </div>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Fertilizer</mat-label>
-              <input type="text"
-                     placeholder="Fertilizer"
-                     aria-label="fertilizer"
-                     matInput
-                     formControlName ="fertilizer_control"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let type of fertilizer_types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+                </div>
+                <div class="form-row-btn">
+                  <div class="row-btn">
+                    <button id="cancelbtn" mat-raised-button type="reset">Reset</button>
+                    <button id="savebtn" mat-raised-button type="submit">Save</button>
+                    <button *ngIf="apiResponse" [class.btn-spinner]="apiResponse" id="spinner"
+                            mat-raised-button></button>
+                  </div>
+                </div>
+              </form>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Pesticide</mat-label>
-              <input type="text"
-                     placeholder="Pesticide"
-                     aria-label="pesticide_type"
-                     matInput
-                     formControlName ="pesticide_type"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let type of pesticide_types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+            </div>
 
-          </div>
+            <table mat-table [dataSource]="dataSource" class="row-border hover mat-elevation-z8" datatable
+                   [dtOptions]="dtOptions" matSort #sort="matSort">
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
 
-          <div class="form-row">
+              <!-- Position Column -->
+              <ng-container matColumnDef="crop_name">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.crop_name}} </td>
+              </ng-container>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Crop Status</mat-label>
-              <input type="text"
-                     placeholder="Crop Status"
-                     aria-label="crop_status"
-                     matInput
-                     formControlName ="crop_status"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let type of crop_status_types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+              <!-- Name Column -->
+              <ng-container matColumnDef="crop_variety">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_variety</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.crop_variety}} </td>
+              </ng-container>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Cost</mat-label>
-              <input  matInput formControlName="cost" placeholder="cost" >
-            </mat-form-field>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="planting_date">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_date</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.planting_date}} </td>
+              </ng-container>
 
-          </div>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="harvest_date">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_date</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.harvest_date}} </td>
+              </ng-container>
 
-          <div class="form-row">
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="expected_yield">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> expected_yield</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.expected_yield}} </td>
+              </ng-container>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Location</mat-label>
-              <input  matInput formControlName="location" placeholder="location" >
-            </mat-form-field>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="soil_type">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> soil_type</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.soil_type}} </td>
+              </ng-container>
 
-          </div>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="fertilizer_control">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_control</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.fertilizer_control}} </td>
+              </ng-container>
 
-        </div>
-        <div class="form-row-btn">
-          <div class="row-btn">
-            <button id="cancelbtn" mat-raised-button type="reset">Reset</button>
-            <button  id="savebtn" mat-raised-button type="submit">Save</button>
-            <button *ngIf="apiResponse" [class.btn-spinner]="apiResponse" id="spinner" mat-raised-button></button>
-          </div>
-        </div>
-      </form>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="pesticide_type">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> pesticide_type</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.pesticide_type}} </td>
+              </ng-container>
 
-    </div>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="crop_status">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_status</th>
+                <td mat-cell class="form-table-column text-center"
+                    *matCellDef="let element"> {{element.crop_status}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="cost">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> cost</th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.cost}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> location</th>
+                <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.location}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px">
+                  Action
+                </th>
+                <td mat-cell *matCellDef="let element" class="form-table-column text-center">
+                  <div class="w-auto pr-4 flex justify-start">
+                    <button class="btn-rounded btn-primary" (click)="updateProduct(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    &nbsp;
+                    &nbsp;
+                    <button class="btn-rounded btn-danger" (click)="deleteProduct(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+
+              <!-- Custom row definitions to be provided to the wrapper table. -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+          </section>
 
   </section>
 
-<table mat-table [dataSource]="dataSource" class="row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions" matSort #sort="matSort">
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="crop_name">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_name </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_name}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="crop_variety">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_variety </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_variety}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="planting_date">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> planting_date </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.planting_date}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="harvest_date">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> harvest_date </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.harvest_date}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="expected_yield">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> expected_yield </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.expected_yield}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="soil_type">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> soil_type </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.soil_type}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="fertilizer_control">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> fertilizer_control </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.fertilizer_control}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="pesticide_type">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> pesticide_type </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.pesticide_type}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="crop_status">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> crop_status </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.crop_status}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="cost">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> cost </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.cost}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="location">
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center"> location </th>
-    <td mat-cell class="form-table-column text-center" *matCellDef="let element"> {{element.location}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="action" >
-    <th mat-header-cell *matHeaderCellDef class="form-table-header text-center" style="width: 180px"> Action</th>
-    <td mat-cell *matCellDef="let element" class="form-table-column text-center">
-      <div   class="w-auto pr-4 flex justify-start">
-        <button class="btn-rounded btn-primary" (click)="updateProduct(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        &nbsp;
-        &nbsp;
-        <button class="btn-rounded btn-danger" (click)="deleteProduct(element)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </td>
-  </ng-container>
-
-
-
-  <!-- Custom row definitions to be provided to the wrapper table. -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
-
-</section>
-
   <section class="schedule-section" *ngIf="!loading && !showComponent && showSchedule">
 
-    <h3 class="me-3 mt-4 mb-4">Crop - {{cropName}} Details</h3>
+    <h3 class="me-3 mt-4 mb-4">Crop - {{cropName}} Planting Details</h3>
 
     <section class="schedule-forms">
 
@@ -301,107 +240,74 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                  <mat-label>Planting location</mat-label>
+                  <mat-label>Planting Method</mat-label>
+                  <input  matInput formControlName="plantMethod" placeholder="plantMethod" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Planting Location</mat-label>
                   <input  matInput formControlName="planting_location" placeholder="planting_location" ngDefaultControl >
                 </mat-form-field>
 
-              </div>
-
-              <div class="form-row">
-
                 <mat-form-field appearance="outline">
-                <mat-label>Planting density</mat-label>
-                <input type="text"
-                       placeholder="Planting density"
-                       aria-label="planting_density"
-                       matInput
-                       formControlName="planting_density"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let item of planting_density" [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-autocomplete>
+                  <mat-label>Planting Density</mat-label>
+                  <input  matInput formControlName="planting_density" placeholder="planting_density" ngDefaultControl >
                 </mat-form-field>
-
-                  <mat-form-field appearance="outline">
-                <mat-label>Seeding rate</mat-label>
-                <input type="text"
-                       placeholder="Seeding rate"
-                       aria-label="seeding_rate"
-                       matInput
-                       formControlName="seeding_rate"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let item of seeding_rate" [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-autocomplete>
-                  </mat-form-field>
 
               </div>
 
               <div class="form-row">
 
                 <mat-form-field appearance="outline">
-                <mat-label>Seeding depth</mat-label>
-                <input type="text"
-                       placeholder="Seeding depth"
-                       aria-label="seeding_depth"
-                       matInput
-                       formControlName="seeding_depth"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let item of seeding_depth" [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-autocomplete>
+                  <mat-label>Seeding Rate</mat-label>
+                  <input  matInput formControlName="seeding_rate" placeholder="seeding_rate" ngDefaultControl >
                 </mat-form-field>
 
-                  <mat-form-field appearance="outline">
                 <mat-form-field appearance="outline">
-                  <mat-label>Planting method</mat-label>
-                  <input type="text"
-                         placeholder="Planting method"
-                         aria-label="planting_method"
-                         matInput
-                         formControlName="planting_method"
-                         [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let item of planting_method" [value]="item">
-                      {{item}}
-                    </mat-option>
-                  </mat-autocomplete>
+                  <mat-label>Seeding Depth</mat-label>
+                  <input  matInput formControlName="seeding_depth" placeholder="seeding_depth" ngDefaultControl >
                 </mat-form-field>
-                  </mat-form-field>
 
               </div>
 
               <div class="form-row">
 
                 <mat-form-field appearance="outline">
-                  <mat-label>Soil preparation</mat-label>
-                  <input type="text"
-                         placeholder="Soil preparation"
-                         aria-label="planting_method"
-                         matInput
-                         formControlName="soil_preparation"
-                         [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let item of soil_preparation" [value]="item">
-                      {{item}}
-                    </mat-option>
-                  </mat-autocomplete>
+                  <mat-label>Soil Preparation</mat-label>
+                  <input  matInput formControlName="soil_preparation" placeholder="soil_preparation" ngDefaultControl >
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                  <mat-label>Planting date</mat-label>
-                  <input matInput formControlName="planting_date" [matDatepicker]="planting_date">
+                  <mat-label>Planting Date</mat-label>
+                  <input matInput
+                         placeholder="planting_date"
+                         readonly
+                         formControlName="planting_date" [matDatepicker]="planting_date">
                   <mat-hint>MM/DD/YYYY</mat-hint>
                   <mat-datepicker-toggle matSuffix [for]="planting_date"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #planting_date></mat-datepicker>
                 </mat-form-field>
 
+              </div>
+              <div class="form-row">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Water Duration</mat-label>
+                  <input  matInput formControlName="water_duration" placeholder="water_duration" ngDefaultControl >
+                </mat-form-field>
+
+              </div>
+
+              <div class="form-row-btn">
+                <div class="row-btn">
+                  <button id="cancelbtn2" mat-raised-button type="reset">Reset</button>
+                  <button  id="savebtn2" mat-raised-button type="submit">Save</button>
+                  <button *ngIf="apiResponse" [class.btn-spinner]="apiResponse" id="spinner2" mat-raised-button></button>
+                </div>
               </div>
 
             </form>
@@ -474,7 +380,10 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Fertilizing date</mat-label>
-                <input matInput formControlName="fertlizing_date" [matDatepicker]="fertlizing_date">
+                <input matInput
+                       placeholder="Enter Date of Birth"
+                       readonly
+                       formControlName="fertlizing_date" [matDatepicker]="fertlizing_date">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="fertlizing_date"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #fertlizing_date></mat-datepicker>
