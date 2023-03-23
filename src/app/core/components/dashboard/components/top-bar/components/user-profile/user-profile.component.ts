@@ -8,11 +8,13 @@ import {CookieService} from "ngx-cookie";
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  Username: any;
 
   constructor(private cookieService: CookieService,
               private router: Router,) { }
 
   ngOnInit(): void {
+    this.Username = JSON.parse(this.cookieService.get('User'))
   }
 
   logout(): void {

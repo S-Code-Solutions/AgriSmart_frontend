@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {faHandsHelping} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-colab-fn-c',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./colab-fn-c.component.scss']
 })
 export class ColabFnCComponent implements OnInit {
+
+  faHandsHelping = faHandsHelping;
 
   constructor() { }
 

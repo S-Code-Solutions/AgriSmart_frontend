@@ -19,17 +19,16 @@ div {
 h6 {
   font-size: 1rem; }
 
-.mat-icon {
-  font-size: 20px;
-  width: 10px; }
 
 .btn-login2{
   background: white;
-  color: #006add;
+  color: #209F2E;
+  width: 40px;
+  height: 40px;
 }
 
 .btn-login:hover{
-  background: #006add;
+  background: #209F2E;
   color: white;
 }
 
@@ -70,4 +69,10 @@ h6 {
   font-size: 48px;
   font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
   display: flex;
+}
+
+.mat-icon2 {
+  height: 40px;
+  width: 40px;
+  font-size: 35px;
 }

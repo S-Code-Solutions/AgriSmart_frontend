@@ -18,7 +18,7 @@ import { WeatherForeComponent } from './components/components/weather-fore/weath
 import { FinanceMgtComponent } from './components/components/finance-mgt/finance-mgt.component';
 import { ColabFnCComponent } from './components/components/colab-fn-c/colab-fn-c.component';
 import { ReportComponent } from './components/components/report/report.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSidenavModule} from "@angular/material/sidenav";
@@ -46,6 +46,10 @@ import { CResultComponent } from './components/components/predict-anly/crop/c-re
 import { FRecommendComponent } from './components/components/predict-anly/fertilizer/f-recommend/f-recommend.component';
 import { FResultComponent } from './components/components/predict-anly/fertilizer/f-result/f-result.component';
 import {DatePipe} from "@angular/common";
+import { OtpscreenComponent } from './core/components/authentication/otpscreen/otpscreen.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -69,6 +73,7 @@ import {DatePipe} from "@angular/common";
     CResultComponent,
     FRecommendComponent,
     FResultComponent,
+    OtpscreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,8 +100,11 @@ import {DatePipe} from "@angular/common";
     MatNativeDateModule,
     MatSortModule,
     MatPaginatorModule,
-    MatTabsModule
-
+    MatTabsModule,
+    MatCardModule,
+    MatCheckboxModule,
+    FormsModule,
+MatSnackBarModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

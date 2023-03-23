@@ -12,7 +12,7 @@ export class LoaderService {
   getProductDetails(): Observable<any> {
     return this.http.get<any>('https://jsonplaceholder.typicode.com/posts', {
       headers:new HttpHeaders({
-
+        'Content-Type':  'application/json'
       })
     }).pipe(delay(2000))
   }

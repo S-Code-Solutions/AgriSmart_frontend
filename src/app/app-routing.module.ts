@@ -12,7 +12,7 @@ import {ColabFnCComponent} from "./components/components/colab-fn-c/colab-fn-c.c
 import {ReportComponent} from "./components/components/report/report.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path:'dashboard',component:DashboardComponent,children:[
       {path:'',component:HomePageComponent},

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {faFileAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-report',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
+
+  faFileAlt = faFileAlt;
 
   constructor() { }
 

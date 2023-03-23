@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {faCloudSun} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-weather-fore',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./weather-fore.component.scss']
 })
 export class WeatherForeComponent implements OnInit {
+
+  faCloudSun = faCloudSun;
 
   showLoader: boolean = true;
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {LoaderService} from "./core/services/loader.service";
 import {Router} from "@angular/router";
 import {LoginService} from "./core/services/login.service";
+import * as Notiflix from "notiflix";
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,6 @@ export class AppComponent {
 
   constructor(private animeService:LoaderService,private authenticationService:LoginService,
               private router:Router) {
-    // if (this.authenticationService.verifyLogin()) {
-    //   this.router.navigate(['/dashboard']);
-    // }else {
-    //   this.router.navigate(['/authentication']);
-    // }
 
   }
 
@@ -35,8 +31,20 @@ export class AppComponent {
       if (res!=null){
         this.showAnime = false
         this.routlet = true
-        console.log("res not null")
+        console.log("appcomponent.ts not null")
+      }else{
+        this.showAnime = false
+        this.routlet = false
+        console.log("appcomponent.ts null")
       }
+    },error => {
+      console.log(error)
+      this.showAnime = false
+      this.routlet = false
+      console.log("appcomponent.ts null")
+      Notiflix.Report.failure('Error',
+        '"appcomponent.ts null"',
+        'Okay');
     })
   }
 }

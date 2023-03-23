@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CRecommendComponent} from "./crop/c-recommend/c-recommend.component";
 import {FRecommendComponent} from "./fertilizer/f-recommend/f-recommend.component";
+import {faCogs} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-predict-anly',
@@ -9,6 +10,8 @@ import {FRecommendComponent} from "./fertilizer/f-recommend/f-recommend.componen
   styleUrls: ['./predict-anly.component.scss']
 })
 export class PredictAnlyComponent implements OnInit {
+
+  faCogs = faCogs;
 
   constructor(public dialog: MatDialog) { }
 

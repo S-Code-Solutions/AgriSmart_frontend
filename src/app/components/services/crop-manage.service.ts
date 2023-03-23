@@ -25,7 +25,7 @@ export class CropManageService {
     return this.http.get<any>(this.baseUrl+'/getall', {
       headers:new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg4MzMyNjksImlhdCI6MTY3ODgxNTI2OX0.xAG_xbh9O7RUExv-HY2qOp1I9CF_uI4TohoMm_8jmtthz-ciSMmb8krKOYy1INUYrYb07K70edIATZJVBOBToA'
+        'Authorization': 'Bearer ' + JSON.parse(this.cookieService.get('token')),
       })
     })
   }
@@ -38,40 +38,10 @@ export class CropManageService {
     }, {
       headers:new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1ZGFyYSIsInJvbGUiOiIxIiwiZXhwIjoxNjc5MzIzMDUxLCJpYXQiOjE2NzkzMDUwNTF9.spaooXUTDImFBellNyl9kyvwNU7nnkUVI8cQYcYjJf0pGuwuvTSBejbFm-OuLi_NMq7ClMnhX87kVjzH8pnghQ'
+        'Authorization': 'Bearer ' + JSON.parse(this.cookieService.get('token')),
       })
     })
   }
 
-  savePlant(complaintDTO: PlantDTO): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'/saveplant', {
-      plantMethod: complaintDTO.plantMethod,
-      MethodDesc: complaintDTO.MethodDesc,
-    }, {
-      headers:new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg4MzMyNjksImlhdCI6MTY3ODgxNTI2OX0.xAG_xbh9O7RUExv-HY2qOp1I9CF_uI4TohoMm_8jmtthz-ciSMmb8krKOYy1INUYrYb07K70edIATZJVBOBToA'
-      })
-    })
-  }
 
-  savePlantDetails(complaintDTO: Plant_DetailDTO): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'/saveplantdtail', {
-      plantMethod: complaintDTO.plantMethod,
-      planting_location: complaintDTO.planting_location,
-      planting_density: complaintDTO.planting_density,
-      seeding_rate: complaintDTO.seeding_rate,
-      seeding_depth: complaintDTO.seeding_depth,
-      soil_preparation: complaintDTO.soil_preparation,
-      planting_date: complaintDTO.planting_date,
-      water_duration: complaintDTO.water_duration,
-      message: complaintDTO.message,
-      crop_id: complaintDTO.crop_id,
-    }, {
-      headers:new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXNpbmR1Iiwicm9sZSI6IjEiLCJleHAiOjE2Nzg4MzMyNjksImlhdCI6MTY3ODgxNTI2OX0.xAG_xbh9O7RUExv-HY2qOp1I9CF_uI4TohoMm_8jmtthz-ciSMmb8krKOYy1INUYrYb07K70edIATZJVBOBToA'
-      })
-    })
-  }
 }

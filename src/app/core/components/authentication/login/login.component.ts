@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ApprovelDialogComponent} from "../../dialogs/approvel-dialog/approvel-dialog.component";
 import {Router} from "@angular/router";
-import {ApprovalDialogConfig} from "../../dialogs/model/ApprovalDialogConfig";
 import {CookieService} from "ngx-cookie";
 import {LoginService} from "../../../services/login.service";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import * as Notiflix from "notiflix";
+import {UserDTO} from "../../../dto/UserDTO";
+import {OtpscreenComponent} from "../otpscreen/otpscreen.component";
 
 @Component({
   selector: 'app-login',
@@ -14,17 +16,18 @@ import {LoginService} from "../../../services/login.service";
 })
 export class LoginComponent implements OnInit {
 
-  LoginForm!: FormGroup;
-  hide = true;
-  error = '';
+  farmerForm!: FormGroup;
+  LoginForm!:FormGroup;
+  showAnime= false;
 
-  constructor(private authenticationService:LoginService,
-              private cookieService: CookieService,
-              private router: Router,
-              public dialog: MatDialog) { }
+  constructor(private router: Router,
+              private _snackBar: MatSnackBar,
+              private authenticationService:LoginService,
+              private cookieService: CookieService,public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.LoginForm = new FormGroup({
+    this.farmerForm = new FormGroup({
       username: new FormControl('', [
         Validators.required
       ]),
@@ -32,38 +35,166 @@ export class LoginComponent implements OnInit {
         Validators.required
       ]),
     });
+    this.LoginForm = new FormGroup({
+      fusername: new FormControl('', [
+        Validators.required
+      ]),
+      femail: new FormControl('', [
+        Validators.required
+      ]),
+      fphoneNo1: new FormControl('', [
+        Validators.required
+      ]),
+      fpassword: new FormControl('', [
+        Validators.required
+      ]),
+    })
+  }
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  openSnackBar() {
+    this._snackBar.open('Wrong Credentials', 'Ok', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['red-snackbar','login-snackbar']
+    });
   }
 
   signIn() {
-    let login=false;
-    console.log("login")
-    this.authenticationService.getTotalCount(this.LoginForm.get('username')?.value)
-      .subscribe(res => {
-        console.log()
-        if (res[0].password == this.LoginForm.get('password')?.value) {
-          // this.cookieService.put('token',JSON.stringify(res[0].token),{ expires: new Date(new Date().getTime() +  24000 * 60 * 60) });
-          this.router.navigate(['/dashboard']);
-          login= true;
-        }else{
-          console.log("res")
+    this.showAnime = true
+    if (this.farmerForm.valid){
+      this.authenticationService.getLoggedIn(this.farmerForm.get('username')?.value,this.farmerForm.get('password')?.value)
+        .subscribe((res:any) => {
           console.log(res)
-          const approval5 = this.dialog.open(ApprovelDialogComponent, {
-            width: '450px',
-            data: new ApprovalDialogConfig('Error', 'UnSuccessful', 'Invalid Username Or Password')
-          });
-          approval5.afterClosed().subscribe(approve => {
-            if (approve) {
-              console.log('Login Unsuccessful');
-            }else{
-              console.log('Login successful');
-            }
-          });
-        }
-      })
+          if (res.code === '00') {
+            this.showAnime = false
+            this.cookieService.put('token',JSON.stringify(res.content.token));
+            this.cookieService.put('User', JSON.stringify(res.content.username));
+            this.cookieService.put('Arr', JSON.stringify(res.content));
+            this.router.navigate(['/dashboard']);
+          }},error => {
+          console.log(error)
+          this.showAnime = false
+          Notiflix.Report.failure('Error',
+            '"Invalid Username Or Password"',
+            'Okay');
+        });
+    }else {
+      this.showAnime = false
+      Notiflix.Report.failure('Error',
+        '"Please Insert All Values Correctly"',
+        'Okay');
+    }
   }
 
-  logout(){
-    this.router.navigate(['/authentication']);
+  addUser(){
+    this.showAnime = true
+    if (this.LoginForm.valid){
+      this.authenticationService.AddnewUser(new UserDTO(
+        this.LoginForm.get('fpassword')?.value,
+        "1",
+        "",
+        this.LoginForm.get('fusername')?.value,
+        "",
+        this.LoginForm.get('fphoneNo1')?.value,
+        "",
+        "",
+        "",
+        this.LoginForm.get('femail')?.value,
+        ""
+      )).subscribe(res=>{
+        console.log(res)
+        if (res.code == "00"){
+          this.showAnime = false
+          Notiflix.Report.success('Success',
+            '"User Added Successful!!"',
+            'Okay');
+          this.clearform();
+        }else{
+          console.log("error")
+          this.showAnime = false
+          Notiflix.Report.failure('Error',
+            '"Invalid Inputs Or Already registered"',
+            'Okay');
+        }},error => {
+        console.log(error)
+        this.showAnime = false
+        Notiflix.Report.failure('Error',
+          '"Invalid Inputs Or Already registered"',
+          'Okay');
+      });
+    }else {
+      this.showAnime = false
+      Notiflix.Report.failure('Error',
+        '"Please Insert All Values Correctly"',
+        'Okay');
+    }
+
   }
+
+  clearform(){
+    this.LoginForm.setValue({
+      password:'',
+      username:'',
+      phoneNo1 :'',
+      email:'',
+    })
+  }
+
+
+  sendOTP(){
+    this.showAnime = true
+    this.authenticationService.SendOTP(this.LoginForm.get('femail')?.value)
+      .subscribe((result:any) => {
+        if (result.code == '00'){
+          this.showAnime = false
+          this.getOTP();
+          console.log("This is result")
+          console.log(result)
+        }else{
+          this.showAnime = false
+          console.log("This is error")
+        }
+      });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OtpscreenComponent, {
+      data: this.results,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // if (result){
+      console.log('The dialog was closed');
+      this.addUser()
+      console.log(result)
+      // }else{
+      //   this.openFailureSnackBar()
+      // }
+
+    });
+  }
+
+  results:any
+
+  getOTP(){
+    this.showAnime = true
+    this.authenticationService.GetOTP(this.LoginForm.get('femail')?.value)
+      .subscribe((result:any) => {
+        if (result.code == '00'){
+          this.showAnime = false
+          this.results = result
+          this.openDialog();
+          console.log("This is getOTP")
+          console.log(result)
+        }else{
+          this.showAnime = false
+          console.log("This is getOTP fail")
+        }
+      });
+  }
+
 
 }

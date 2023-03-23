@@ -1,0 +1,12 @@
+<h1 mat-dialog-title style="color: #1C8727">Enter OTP</h1>
+<div mat-dialog-content>
+  <p style="color: #1C8727">PLease Enter Your OTP</p>
+  <mat-form-field appearance="fill">
+    <mat-label style="color: #1C8727">OTP</mat-label>
+    <input matInput [(ngModel)]="searchText">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <!--  <button mat-button (click)="onNoClick()">Cancel</button>-->
+  <button mat-button [disabled]="searchText != incomeData " style="background: #1C8727" (click)="onNoClick()">Ok</button>
+</div>
