@@ -50,6 +50,11 @@ import { OtpscreenComponent } from './core/components/authentication/otpscreen/o
 import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {StompConfig, StompService} from "@stomp/ng2-stompjs";
+import {MatSelectModule} from "@angular/material/select";
+import {SharedModule} from "./core/shared/shared.module";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MaterialFileInputModule} from "ngx-material-file-input";
 
 @NgModule({
   declarations: [
@@ -75,38 +80,52 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     FResultComponent,
     OtpscreenComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSidenavModule,
-    MatListModule,
-    FontAwesomeModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatToolbarModule,
-    CookieModule.forRoot(),
-    HttpClientModule,
-    MatDialogModule,
-    CarouselModule,
-    DataTablesModule,
-    MatTableModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatTabsModule,
-    MatCardModule,
-    MatCheckboxModule,
-    FormsModule,
-MatSnackBarModule
-  ],
-  providers: [DatePipe],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatSidenavModule,
+        MatListModule,
+        FontAwesomeModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatToolbarModule,
+        CookieModule.forRoot(),
+        HttpClientModule,
+        MatDialogModule,
+        CarouselModule,
+        DataTablesModule,
+        MatTableModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatTabsModule,
+        MatCardModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        SharedModule,
+        MatProgressBarModule,
+        MaterialFileInputModule,
+    ],
+  providers: [DatePipe,StompService,
+    {
+      provide: StompConfig,
+      useValue: {
+        url: 'ws://localhost:8080/notify-websocket',
+        heartbeatIncoming: 0,
+        heartbeatOutgoing: 20000,
+        reconnectDelay: 5000,
+        debug: true
+      }
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

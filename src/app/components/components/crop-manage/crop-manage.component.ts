@@ -4,9 +4,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as Notiflix from "notiflix";
 import {CropDTO} from "../../dto/CropDTO";
 import {MatTableDataSource} from "@angular/material/table";
-import {Subject, Subscription} from "rxjs";
+import {debounceTime, distinctUntilChanged, Observable, Subject, Subscription, timeout} from "rxjs";
 import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {PlantingDTO} from "../../dto/PlantingDTO";
 import {FertilizingDTO} from "../../dto/FertilizingDTO";
 import {HarvestingDTO} from "../../dto/HarvestingDTO";
@@ -17,10 +17,14 @@ import {Plant_DetailDTO} from "../../dto/Plant_DetailDTO";
 import {MAT_DATE_FORMATS, MatDateFormats} from "@angular/material/core";
 import {PlantManageService} from "../../services/plant-manage.service";
 import * as SockJS from 'sockjs-client';
-import {  CompatClient, Stomp} from '@stomp/stompjs';
+import {CompatClient, Message, Stomp} from '@stomp/stompjs';
 import {CookieService} from "ngx-cookie";
 import {faLeaf} from '@fortawesome/free-solid-svg-icons';
 import {MatTabChangeEvent} from "@angular/material/tabs";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Filter} from "../../../core/filters/Filter";
+import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {SystemConfig} from "../../../core/config/SystemConfig";
 
 
 const MY_FORMATS: MatDateFormats = {
@@ -54,14 +58,14 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   soil_types: string[] = ['One', 'Two', 'Three'];
   fertilizer_types: string[] = ['One', 'Two', 'Three'];
   pesticide_types: string[] = ['One', 'Two', 'Three'];
-  crop_status_types: string[] = ['One', 'Two', 'Three'];
+  crop_status_types: string[] = ['Germinate', 'Seedling', 'Vegetative','Reproductive','Mature','Senescence'];
 
   components!: Array<CropDTO>[];
   displayedColumns: string[] = ['crop_name', 'crop_variety', 'crop_status', 'action'];
   dataSource!: MatTableDataSource<Array<CropDTO>>;
   private allComponentsSub!: Subscription;
   ofListofCrops!: any[];
-  ofListofCropss: string[] = ['One', 'Two', 'Three'];
+  ofListofCropss: string[] = ['Planting Details', 'Fertilizing Details', 'Harvesting Details'];
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -86,24 +90,63 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   plantingtable = false
   plantmethods!: any[];
   pmethod!:any
+  actStatus = 'Available'
+  showDtails = false
+  plantingbtn= false
+  fertilizingbtn= false
+  harvetingbtn = false
+
+  filterDetailsForm!: FormGroup;
+  search = new Subject();
+  filters: Filter[] = [{key: 'ALL', value: 'All'}, {key: 'NAME', value: 'Name'}, {key: 'DESC', value: 'Desc'}, {key: 'URL', value: 'Url'}, {
+    key: 'QTY', value: 'qty'},{key: 'PRICE', value: 'Price'},{key: 'CODE', value: 'Code'}];
+  cropDetails!: any[];
+  searchedWords!: string[];
+
+  fileToUpload: any;
+  // fileName: any;
+  currentFile?: File;
+  progress = 0;
+  message: string[] = [];
+  fileName = 'Select File';
+  fileInfos?: Observable<any>;
+  progressbar = true;
+  progressInfos: any[] = [];
 
   fertilizingScheduleForm!: FormGroup;
   fertilizingdataSource!: MatTableDataSource<Array<FertilizingDTO>>;
   displayedFertilizingColumns: string[] = ['crop_name', 'fertilizer_type', 'fertilizer_app_method', 'fertilizer_app_fre', 'application_rate', 'fertilizer_placement', 'application_timing', 'fertigation', 'fertlizing_date', 'action'];
   managefertilizing = false
   fertilizingtable = false
+  FertilizeForm!: FormGroup;
 
   harvestingScheduleForm!: FormGroup;
   harvestingdataSource!: MatTableDataSource<Array<HarvestingDTO>>;
   displayedHarvestingColumns: string[] = ['crop_name', 'harvest_method', 'harvesting_equipment', 'labor_requirement', 'storage_requirement', 'harvest_quality', 'market_destination', 'post_harvest_handling', 'yield_analysis', 'crop_maturity', 'harvest_labor_cost', 'harvest_transport', 'harvest_waste', 'harvesting_date', 'action'];
   manageharvesting = false
   harvestingtable = false
+  harvestingForm!: FormGroup;
 
   public stompClient!: CompatClient;
   messages: any[] = [];
+  private fileDatas!: File;
+  previews: string[] = [];
+
+  private searchComponentsSub!: Subscription;
+  CropList! :any[];
+  pageCount = 0;
+  pageEvent!: PageEvent;
+  length = 50;
+  pageSize = 10;
+  disabled = false;
+  showFirstLastButtons = true;
+  showPageSizeOptions = true;
+  pageSizeOptions!: number[];
+  hidePageSize = false;
+  pageIndex = 0;
 
   constructor(private cropManageService: CropManageService,
-              private datePipe: DatePipe, private plantManageService: PlantManageService, private cookieService: CookieService) {
+              private datePipe: DatePipe, private plantManageService: PlantManageService, private cookieService: CookieService,private stompService: StompService) {
     this.dataSource = new MatTableDataSource(this.components);
     // const webSocket = new SockJS('http://localhost:8080/websocket');
     // this.stompClient = Stomp.over(webSocket);
@@ -126,6 +169,9 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       ]),
       crop_variety: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z0-9]+$')
+      ]),
+      imageURL: new FormControl('', [
+        Validators.required
       ]),
       crop_status: new FormControl('', [
         Validators.required, Validators.pattern('^[a-zA-Z]+$')
@@ -168,91 +214,98 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       ]),
     })
 
-    // this.fertilizingScheduleForm = new FormGroup({
-    //   crop_name: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertilizer_type: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertilizer_app_method: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertilizer_app_fre: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   application_rate: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertilizer_placement: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   application_timing: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertigation: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   fertlizing_date: new FormControl('', [
-    //     Validators.required, Validators.pattern('^[a-zA-Z]+$')
-    //   ]),
-    // })
+    this.FertilizeForm = new FormGroup({
+      fertilize_name: new FormControl('', [
+        Validators.required,
+      ]),
+      fertilizer_type: new FormControl('', [
+        Validators.required,
+      ]),
+      fertilizer_app_method: new FormControl('', [
+        Validators.required,
+      ]),
+      fertilizer_app_fre: new FormControl('', [
+        Validators.required,
+      ]),
+      application_rate: new FormControl('', [
+        Validators.required,
+      ]),
+      fertilizer_placement: new FormControl('', [
+        Validators.required,
+      ]),
+      application_timing: new FormControl('', [
+        Validators.required,
+      ]),
+      fertigation: new FormControl('', [
+        Validators.required,
+      ]),
+      fertlizing_date: new FormControl('', [
+        Validators.required,
+      ]),
+    })
     //
-    // this.harvestingScheduleForm = new FormGroup({
-    //   crop_name: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvest_method: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvesting_equipment: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   labor_requirement: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   storage_requirement: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvest_quality: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   market_destination: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   post_harvest_handling: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   yield_analysis: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   crop_maturity: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvest_labor_cost: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvest_transport: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvest_waste: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    //   harvesting_date: new FormControl('', [
-    //     Validators.required,
-    //   ]),
-    // })
+    this.harvestingForm = new FormGroup({
+      harvest_method: new FormControl('', [
+        Validators.required,
+      ]),
+      harvesting_equipment: new FormControl('', [
+        Validators.required,
+      ]),
+      labor_requirement: new FormControl('', [
+        Validators.required,
+      ]),
+      storage_requirement: new FormControl('', [
+        Validators.required,
+      ]),
+      harvest_quality: new FormControl('', [
+        Validators.required,
+      ]),
+      harvest_cost: new FormControl('', [
+        Validators.required,
+      ]),
+      harvest_waste: new FormControl('', [
+        Validators.required,
+      ]),
+      harvesting_date: new FormControl('', [
+        Validators.required,
+      ])
+    })
+    this.filterDetailsForm = new FormGroup({
+      searchKeyWord: new FormControl('', [
+        Validators.required
+      ]),
+    });
 
-    this.refreshTable();
-    this.sendMessage()
+    // this.refreshTable();
+    // this.connect();
+
     this.getCropTableList()
+    this.getCropList();
     this.dataSource = new MatTableDataSource(this.ofListofCrops);
+    this.fileInfos = this.cropManageService.getImg();
+    this.search.pipe(
+      debounceTime(SystemConfig.getDebounceTime()),
+      distinctUntilChanged())
+      .subscribe(() => {
+        this.searchedWords = this.filterDetailsForm.get('searchKeyWord')?.value.trim().split(' ');
+        this.refreshTable();
+
+      });
+
   }
 
+  // connect() {
+  //   this.stompService.initAndConnect();
+  // }
+
+
   ngAfterViewInit(): void {
-    this.refreshTable();
-    // this.getCropTableList()
-    // this.dataSource = new MatTableDataSource(this.components);
+    this.stompService.initAndConnect();
+    this.stompService.connectObservable.subscribe(() => {
+      this.initializeWebSocketConnection();
+      this.sendMessage();
+      this.gotMessage();
+    });
   }
   ngOnDestroy(): void {
     // this.client.deactivate();
@@ -261,26 +314,21 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   initializeWebSocketConnection() {
-    /**
-     * Create a SockJS server with created back-end endpoint called /chat-websocket and added it over Stomp.
-     */
-    const serverUrl = 'http://localhost:8080/notify-websocket';
-    const ws = new SockJS(serverUrl);
+    const serverUrl = window.location.protocol === 'https:' ? 'wss://' + window.location.host + '/notify-websocket' : 'ws://' + window.location.host + '/notify-websocket';
+    const ws = new WebSocket(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
-    /**
-     * Connect stomp client and subscribe asynchronously to the chat message-handling Controller endpoint and push any message body into the messages array
-     */
+
     this.stompClient.connect({}, function() {
       that.stompClient.subscribe('/notify/notification', message => {
-        that.cookieService.get('User')
-        // if (message.body) {
-        //   let obj = JSON.parse(message.body);
-        //   that.addMessage(obj.text, obj.username, obj.avatar);
-        // }
+        that.cookieService.get('User');
+        console.log(message);
       });
     });
   }
+
+
+
 
   addMessage(message: any, username: string, avatar: string) {
     this.messages.push({
@@ -294,19 +342,19 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   sendMessage() {
-    this.stompClient.send('/app/sendnotification', {}, this.cookieService.get('User'));
-    // this.plantManageService.sendNotify(this.stompClient).subscribe(result => {
-    //   console.log("Crop Successfully Added")
-    //   console.log(result)
-    //   Notiflix.Notify.success('Crop Successfully Added',{
-    //     position: 'center-bottom'
-    //   });
-    // }, error => {
-    //   console.log(error)
-    //   Notiflix.Notify.failure("Crop-Variety Already Exists",{
-    //     position: 'center-bottom'
-    //   });
-    // });
+    this.stompService.connectObservable.subscribe(connected => {
+      if (connected) {
+        this.stompService.publish('/app/sendnotification', this.cookieService.get('User'));
+      } else {
+        this.stompService.initAndConnect();
+      }
+    });
+  }
+
+  gotMessage() {
+    this.stompService.subscribe('/my-subscription').subscribe((message: Message) => {
+      console.log(`Received message: ${message.body}`);
+    });
   }
 
 
@@ -319,11 +367,6 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
     const currentDate = new Date();
     return (d ?? currentDate).getTime() >= currentDate.getTime();
   }
-
-
-
-
-
 
 
   previewUrl!: any | ArrayBuffer | null;
@@ -353,24 +396,150 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
     reader.readAsDataURL(file);
   }
 
+  selectFile(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const file: File = event.target.files[0];
+      this.currentFile = file;
+      this.fileName = this.currentFile.name;
+    } else {
+      this.fileName = 'Select File';
+    }
+  }
+
+  upload(): void {
+    // this.progress = 0;
+    // this.message = "";
+    //
+    // if (this.currentFile) {
+    //   this.cropManageService.saveImg(this.currentFile).subscribe(
+    //     (event: any) => {
+    //       if (event.type === HttpEventType.UploadProgress) {
+    //         this.progress = Math.round(100 * event.loaded / event.total);
+    //       } else if (event instanceof HttpResponse) {
+    //         this.message = event.body.message;
+    //         this.fileInfos = this.cropManageService.getImg();
+    //       }
+    //     },
+    //     (err: any) => {
+    //       console.log(err);
+    //       this.progress = 0;
+    //
+    //       if (err.error && err.error.message) {
+    //         this.message = err.error.message;
+    //       } else {
+    //         this.message = 'Could not upload the file!';
+    //       }
+    //
+    //       this.currentFile = undefined;
+    //     });
+    // }
+
+  }
+
+  uploadFile(fileInput: any): void {
+    this.message = [];
+    this.progressInfos = [];
+    this.fileDatas = <File>fileInput.target.files[0];
+    this.previews = [];
+
+    if (this.fileDatas) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log(e.target.result);
+        this.previews.push(e.target.result);
+      };
+      reader.readAsDataURL(this.fileDatas);
+    }
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      console.log(e.target.result);
+      this.previews.push(e.target.result);
+    };
+  }
+
+
+  handleFileInput(file: any) {
+    this.fileToUpload = file.files.item(0);
+    console.log(file)
+    console.log(file.files)
+    console.log(file.files.item(0))
+    console.log(this.fileToUpload)
+    // Show image preview
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+    // this.imageUrl = this.fileToUpload.name;
+    console.log(this.imageUrl);
+    this.fileName = this.fileToUpload.name;
+    console.log(this.fileName)
+  }
+
+  onSaveImg() {
+
+    if (this.fileToUpload) {
+
+      this.cropManageService.saveImage(this.fileToUpload).subscribe(res => {
+        if (res) {
+          if (res.code == '00') {
+          console.log(res)
+          console.log("Crop Successfully Added")
+          Notiflix.Notify.success('Crop Successfully Added!',{
+            position: 'center-center',
+            width:'500px',
+            backOverlay:true,
+            backOverlayColor:'rgba(0,0,0,0.5)',
+            cssAnimationStyle:'zoom',
+            fontSize:'33px'
+
+          });
+          this.getCropTableList();
+          }else{
+            Notiflix.Notify.failure("Crop Adding Unsuccessful!",{
+              position: 'center-center',
+              width:'500px',
+              backOverlay:true,
+              backOverlayColor:'rgba(0,0,0,0.5)',
+              cssAnimationStyle:'zoom',
+              fontSize:'33px'
+            });
+          }
+          // this.state = true;
+        }
+      })
+    }
+  }
 
 
   saveCrop() {
     this.cropManageService.saveCrop(new CropDTO(
       this.cropDetailsForm.get('crop_name')?.value,
       this.cropDetailsForm.get('crop_variety')?.value,
+      this.fileName,
       this.cropDetailsForm.get('crop_status')?.value
     )).subscribe(result => {
-      console.log("Crop Successfully Added")
-      console.log(result)
-      Notiflix.Notify.success('Crop Successfully Added',{
-        position: 'center-bottom'
-      });
-      this.getCropTableList()
+      if (result.code == '00') {
+        this.onSaveImg();
+      }else{
+        Notiflix.Notify.failure("Crop Adding Unsuccessful!",{
+          position: 'center-center',
+          width:'500px',
+          backOverlay:true,
+          backOverlayColor:'rgba(0,0,0,0.5)',
+          cssAnimationStyle:'zoom',
+          fontSize:'33px'
+        });
+      }
     }, error => {
       console.log(error)
       Notiflix.Notify.failure("Crop-Variety Already Exists",{
-        position: 'center-bottom'
+        position: 'center-center',
+        width:'500px',
+        backOverlay:true,
+        backOverlayColor:'rgba(0,0,0,0.5)',
+        cssAnimationStyle:'zoom',
+        fontSize:'33px'
       });
     });
   }
@@ -398,20 +567,46 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   //   // this.dtTrigger.unsubscribe();
   // }
 
+
+
   getCropTableList(){
     this.allComponentsSub = this.cropManageService.getAllCrops()
       // .pipe(timeout(4000))
       .subscribe(result => {
         console.log(result)
-        this.dataSource = result.content;
+        // this.dataSource = result.content;
+        this.cropDetails = result.content;
       }, error => {
         console.log(error);
       });
   }
 
   public refreshTable(): void {
+    const searchKeyWord = this.filterDetailsForm.get('searchKeyWord')?.value;
     this.getCropTableList();
+    this.searchTable(searchKeyWord)
     this.getCropList();
+  }
+
+  searchTable(searchKeyWord: string): void {
+    this.searchComponentsSub = this.cropManageService.searchComponent(searchKeyWord)
+      .pipe(timeout(4000))
+      .subscribe(result => {
+        console.log(result.content)
+        this.paginator.length = result.content.length;
+        this.cropDetails = result.content;
+        this.refreshPageCount();
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  public refreshPageCount(): void {
+    if (this.paginator){
+      console.log('refresh page count');
+      this.pageCount = Math.ceil(this.paginator.length / this.paginator.pageSize);
+      console.log('refresh page count after');
+    }
   }
 
 
@@ -422,10 +617,141 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.showComponent = false;
       this.loading = false;
-      this.showSchedule = true;
-      this.plantingtable = true
+      this.showSchedule = false;
       this.cropName = item
+      this.showDtails = true
     }, 500); // simulate a 2-second delay for loading the component
+  }
+
+  getDtailLists(item: any,cropName:any) {
+    if (item == 'Planting Details'){
+      console.log(item)
+      this.loading = true;
+      setTimeout(() => {
+        this.showComponent = false;
+        this.loading = false;
+        this.fertilizingtable = false
+        this.fertilizingbtn = false
+        this.harvestingtable = false
+        this.harvetingbtn = false
+        this.managefertilizing = false;
+        this.manageharvesting = false;
+        this.fertilizingtable = false;
+        this.harvestingtable = false;
+        this.loading = false;
+        this.showSchedule = true;
+        this.plantingtable = true
+        this.plantingbtn = true
+        this.cropName = cropName
+      }, 500); // simulate a 2-second delay for loading the component
+    }else if (item == 'Fertilizing Details'){
+      console.log(item)
+      this.loading = true;
+      setTimeout(() => {
+        this.showComponent = false;
+        this.loading = false;
+        this.plantingtable = false
+        this.plantingbtn = false
+        this.harvestingtable = false
+        this.harvetingbtn = false
+        this.manageharvesting = false;
+        this.harvestingtable = false;
+        this.manageplanting = false
+        this.plantingtable = false;
+        this.loading = false;
+        this.showSchedule = true;
+        this.fertilizingtable = true
+        this.fertilizingbtn = true
+        this.cropName = cropName
+      }, 500); // simulate a 2-second delay for loading the component
+    }else if (item == 'Harvesting Details'){
+      console.log(item)
+      this.loading = true;
+      setTimeout(() => {
+        this.showComponent = false;
+        this.loading = false;
+        this.fertilizingtable = false
+        this.fertilizingbtn = false
+        this.plantingtable = false
+        this.plantingbtn = false
+        this.manageplanting = false
+        this.plantingtable = false;
+        this.managefertilizing = false;
+        this.fertilizingtable = false;
+        this.loading = false;
+        this.showSchedule = true;
+        this.harvestingtable = true
+        this.harvetingbtn = true
+        this.cropName = cropName
+      }, 500); // simulate a 2-second delay for loading the component
+    }else{
+      console.log(item)
+      this.loading = true;
+      setTimeout(() => {
+        this.showComponent = false;
+        this.loading = false;
+        this.fertilizingtable = false
+        this.fertilizingbtn = false
+        this.harvestingtable = false
+        this.harvetingbtn = false
+        this.managefertilizing = false;
+        this.manageharvesting = false;
+        this.fertilizingtable = false;
+        this.harvestingtable = false;
+        this.loading = false;
+        this.showSchedule = true;
+        this.plantingtable = true
+        this.plantingbtn = true
+        this.cropName = cropName
+      }, 500); // simulate a 2-second delay for loading the component
+    }
+
+  }
+
+  plantingDtails() {
+    this.loading = true;
+    setTimeout(() => {
+      this.showComponent = false;
+      this.managefertilizing = false;
+      this.manageharvesting = false;
+      this.fertilizingtable = false;
+      this.harvestingtable = false;
+      this.loading = false;
+      this.showSchedule = true;
+      this.manageplanting = true
+      this.plantingtable = true;
+    }, 500);
+  }
+
+  fertilizDtails() {
+    this.loading = true;
+    setTimeout(() => {
+      this.showComponent = false;
+      this.manageharvesting = false;
+      this.harvestingtable = false;
+      this.manageplanting = false
+      this.plantingtable = false;
+      this.loading = false;
+      this.showSchedule = true;
+      this.managefertilizing = true;
+      this.fertilizingtable = true;
+    }, 500);
+
+  }
+
+  harvestDtails() {
+    this.loading = true;
+    setTimeout(() => {
+      this.showComponent = false;
+      this.manageplanting = false
+      this.plantingtable = false;
+      this.managefertilizing = false;
+      this.fertilizingtable = false;
+      this.loading = false;
+      this.showSchedule = true;
+      this.manageharvesting = true;
+      this.harvestingtable = true;
+    }, 500);
   }
 
 
@@ -523,51 +849,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
   }
 
-  plantingDtails() {
-    this.loading = true;
-    setTimeout(() => {
-      this.showComponent = false;
-      this.managefertilizing = false;
-      this.manageharvesting = false;
-      this.fertilizingtable = false;
-      this.harvestingtable = false;
-      this.loading = false;
-      this.showSchedule = true;
-      this.manageplanting = true
-      this.plantingtable = true;
-    }, 500);
-  }
 
-  fertilizDtails() {
-    this.loading = true;
-    setTimeout(() => {
-      this.showComponent = false;
-      this.manageharvesting = false;
-      this.harvestingtable = false;
-      this.manageplanting = false
-      this.plantingtable = false;
-      this.loading = false;
-      this.showSchedule = true;
-      this.managefertilizing = true;
-      this.fertilizingtable = true;
-    }, 500);
-
-  }
-
-  harvestDtails() {
-    this.loading = true;
-    setTimeout(() => {
-      this.showComponent = false;
-      this.manageplanting = false
-      this.plantingtable = false;
-      this.managefertilizing = false;
-      this.fertilizingtable = false;
-      this.loading = false;
-      this.showSchedule = true;
-      this.manageharvesting = true;
-      this.harvestingtable = true;
-    }, 500);
-  }
 
   savePlant() {
     this.plantManageService.savePlant(new PlantDTO(
@@ -633,4 +915,82 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
 
+  viewDetails(componetID: any) {
+    // viewDetails(itemId:any): void {
+    //   this.itemsservice.getItemDetails(itemId).subscribe(res => {
+    //     console.log(res)
+    //     const dialogConfig = new MatDialogConfig();
+    //     dialogConfig.disableClose = true;
+    //     dialogConfig.autoFocus = true;
+    //     dialogConfig.data = res;
+    //     console.log('----------------------------');
+    //     const dialogRef = this.dialog.open(ItemDetailsComponent, dialogConfig);
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       this.loader = false;
+    //       console.log("response code1")
+    //       console.log(result)
+    //       console.log("response code2")
+    //       this.refreshTable();
+    //     });
+    //
+    //   })
+    // }
+  }
+
+  updateCustomer(items: any) {
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+    // dialogConfig.data = row;
+    // dialogConfig.width = '100%';
+    // dialogConfig.height = '95%';
+    // console.log(row);
+    // console.log('----------------------------');
+    // const dialogRef = this.dialog.open(UpdateItemsComponent, dialogConfig);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.loader = false;
+    //   console.log("response code1")
+    //   console.log(result)
+    //   console.log("response code2")
+    //   this.refreshTable();
+    // });
+  }
+
+  deleteCustomer(items: any) {
+    // const approval = this.dialog.open(ApprovelDialogComponent, {
+    //   width: '350px',
+    //   data: new ApprovalDialogConfig('Delete', 'Warning !', 'Are you sure you want to delete '+row.componetName+' Item?')
+    // });
+    // approval.afterClosed().subscribe(approve => {
+    //   if (approve) {
+    //     this.loader = false;
+    //     console.log(approve)
+    //     this.itemsservice.deleteComponent(row.componetID).subscribe(res => {
+    //       console.log(res);
+    //       this.refreshTable();
+    //     });
+    //
+    //   }else{
+    //     const approval4 = this.dialog.open(ApprovelDialogComponent, {
+    //       width: '350px',
+    //       data: new ApprovalDialogConfig('Error', 'UnSuccessful', 'Item '+row.componetName+' Is Not Deleted')
+    //     });
+    //     approval4.afterClosed().subscribe(approve => {
+    //       if (approve) {
+    //         this.loader = false;
+    //         this.refreshTable();
+    //
+    //       }
+    //     })
+    //   }
+    // });
+  }
+
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+  }
 }

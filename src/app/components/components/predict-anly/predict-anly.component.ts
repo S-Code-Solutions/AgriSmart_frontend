@@ -3,6 +3,9 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CRecommendComponent} from "./crop/c-recommend/c-recommend.component";
 import {FRecommendComponent} from "./fertilizer/f-recommend/f-recommend.component";
 import {faCogs} from '@fortawesome/free-solid-svg-icons';
+import {FormControl, FormGroup} from "@angular/forms";
+import {PredictAnlyService} from "../../services/predict-anly.service";
+import {CookieService} from "ngx-cookie";
 
 @Component({
   selector: 'app-predict-anly',
@@ -13,7 +16,41 @@ export class PredictAnlyComponent implements OnInit {
 
   faCogs = faCogs;
 
-  constructor(public dialog: MatDialog) { }
+   foods: any[] =  [
+    {value: 'Jaffna', viewValue: 'Jaffna'},
+    {value: 'Kilinochchi', viewValue: 'Kilinochchi'},
+    {value: 'Mannar', viewValue: 'Mannar'},
+    {value: 'Mullaitivu', viewValue: 'Mullaitivu'},
+    {value: 'Vavuniya', viewValue: 'Vavuniya'},
+    {value: 'Puttalam', viewValue: 'Puttalam'},
+    {value: 'Kurunegala', viewValue: 'Kurunegala'},
+    {value: 'Gampaha', viewValue: 'Gampaha'},
+    {value: 'Colombo', viewValue: 'Colombo'},
+    {value: 'Kalutara', viewValue: 'Kalutara'},
+    {value: 'Anuradhapura', viewValue: 'Anuradhapura'},
+    {value: 'Polonnaruwa', viewValue: 'Polonnaruwa'},
+    {value: 'Matale', viewValue: 'Matale'},
+    {value: 'Kandy', viewValue: 'Kandy'},
+    {value: 'Nuwara Eliya', viewValue: 'Nuwara Eliya'},
+    {value: 'Kegalle', viewValue: 'Kegalle'},
+    {value: 'Ratnapura', viewValue: 'Ratnapura'},
+    {value: 'Trincomalee', viewValue: 'Trincomalee'},
+    {value: 'Batticaloa', viewValue: 'Batticaloa'},
+    {value: 'Ampara', viewValue: 'Ampara'},
+    {value: 'Badulla', viewValue: 'Badulla'},
+    {value: 'Monaragala', viewValue: 'Monaragala'},
+    {value: 'Hambantota', viewValue: 'Hambantota'},
+    {value: 'Matara', viewValue: 'Matara'},
+    {value: 'Galle', viewValue: 'Galle'},
+  ];
+
+  foodControl = new FormControl(this.foods[2].value);
+
+  form = new FormGroup({
+    food: this.foodControl,
+  });
+
+  constructor(public dialog: MatDialog,public climateService:PredictAnlyService,private cookieService: CookieService,) { }
 
   ngOnInit(): void {
   }
@@ -52,6 +89,34 @@ export class PredictAnlyComponent implements OnInit {
       console.log("response code2")
       // this.refreshTable();
     });
+  }
+
+  someMethod(value: any){
+    this.getWeatherdata(value);
+    this.getlnagtitude(value)
+    console.log(value);
+  }
+
+  getWeatherdata(value: any){
+    this.climateService.getClimatedata(value).subscribe(res=>{
+      console.log(res)
+      this.cookieService.put('Cli', JSON.stringify(res));
+    })
+  }
+
+  getlnagtitude(value: any){
+    this.climateService.getLangtdata(value).subscribe(res=>{
+      console.log(res[0].lon)
+      console.log(res[0].lat)
+      this.getSoilData(res[0].lat,res[0].lon);
+    })
+  }
+
+  getSoilData(lat:any,lon:any){
+    this.climateService.getSoiltdata(lat,lon).subscribe(res=>{
+      console.log(res.properties.layers[0].depths[0].values['Q0.5'])
+      console.log(res.properties.layers[1].depths[0].values['Q0.5'])
+    })
   }
 
 }

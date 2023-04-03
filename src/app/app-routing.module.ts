@@ -13,17 +13,18 @@ import {ReportComponent} from "./components/components/report/report.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, },
   {path:'dashboard',component:DashboardComponent,children:[
-      {path:'',component:HomePageComponent},
-      {path:'homepage',component:HomePageComponent},
-      {path: 'cropmgt', component: CropManageComponent},
-      {path: 'predict', component: PredictAnlyComponent},
-      {path: 'weather', component: WeatherForeComponent},
-      {path: 'finance', component: FinanceMgtComponent},
-      {path: 'colabfc', component: ColabFnCComponent},
-      {path: 'report', component: ReportComponent},
+      {path:'',component:HomePageComponent,canActivate: [AuthGuard] },
+      {path:'homepage',component:HomePageComponent,canActivate: [AuthGuard] },
+      {path: 'cropmgt', component: CropManageComponent,canActivate: [AuthGuard] },
+      {path: 'predict', component: PredictAnlyComponent,canActivate: [AuthGuard] },
+      {path: 'weather', component: WeatherForeComponent,canActivate: [AuthGuard] },
+      {path: 'finance', component: FinanceMgtComponent,canActivate: [AuthGuard] },
+      {path: 'colabfc', component: ColabFnCComponent,canActivate: [AuthGuard] },
+      {path: 'report', component: ReportComponent,canActivate: [AuthGuard] },
     ]},
+  { path: 'shared', loadChildren: () => import('./core/shared/shared.module').then(m => m.SharedModule) },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
 ];
 

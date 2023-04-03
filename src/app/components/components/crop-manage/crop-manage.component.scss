@@ -391,3 +391,220 @@ mat-card-content{
 }
 
 
+.crop-box{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 8px;
+}
+
+.fonta{
+  font-size: 10px;
+}
+
+.al{
+  padding: 0;
+  margin: 0;
+}
+
+.bdy{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cont {
+  position: relative;
+}
+
+.cont .card {
+  position: relative;
+  width: 320px;
+  height: 450px;
+  background: #232323;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cont .card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #37A844;
+  clip-path: circle(150px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+
+.cont .card:hover:before {
+  clip-path: circle(300px at 80% -20%);
+}
+
+.cont .card:after {
+  content: "Crop";
+  position: absolute;
+  top: 30%;
+  left: -20%;
+  font-size: 12em;
+  font-weight: 800;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.04);
+
+}
+
+.cont .card .imgBx {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  transition: .5s;
+}
+
+.cont .card:hover .imgBx {
+  top: 0%;
+  transform: translateY(-25%);
+  /* bug  */
+}
+
+.cont .card .imgBx img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(20deg);
+  width: 270px;
+}
+
+.cont .card .contentBx {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 1s;
+  z-index: 90;
+}
+
+.cont .card:hover .contentBx {
+  height: 230px;
+  width: 270px;
+}
+
+.cont .card .contentBx h2 {
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.cont .card .contentBx .size,
+.cont .card .contentBx .color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 20px;
+  transition: .5s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cont .card:hover .contentBx .size {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: .5s;
+}
+
+.cont .card:hover .contentBx .color {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: .6s;
+}
+
+.cont .card .contentBx .size h3,
+.cont .card .contentBx .color h3 {
+  color: white;
+  font-weight: 300;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 10px;
+}
+
+.cont .card .contentBx .size span {
+  width: 46px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  display: inline-block;
+  color: #111;
+  background: #fff;
+  margin: 0 5px;
+  transition: .5s;
+  color: #111;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cont .card .contentBx .size span:hover {  /* other bug */
+  background: #B90000;
+}
+
+.cont .card .contentBx .color span {
+  width: 20px;
+  height: 20px;
+  background: #ff0;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.cont .card .contentBx .color span:nth-child(2) {
+  background: #1BBFE9;
+}
+
+.cont .card .contentBx .color span:nth-child(3) {
+  background: #1B2FE9;
+}
+
+.cont .card .contentBx .color span:nth-child(4) {
+  background: #080481;
+}
+
+.cont .card .contentBx a {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #111;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: .5s;
+}
+
+.cont .card:hover .contentBx a {
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: .7s;
+}
+
+.add-btn{
+  //width: 166px;
+  //height: 50px;
+  border: 2px solid #209F2E;
+  color: #209F2E;
+  font-weight: bold;
+  width: 164px;
+}
+
+.add-btn:hover{
+  //width: 166px;
+  //height: 50px;
+  background: #209F2E;
+  color: white;
+  font-weight: bold;
+}

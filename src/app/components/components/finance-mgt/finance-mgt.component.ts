@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons';
+// import chart from 'chart.js';
 
 @Component({
   selector: 'app-finance-mgt',
@@ -9,6 +10,7 @@ import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons';
 export class FinanceMgtComponent implements OnInit {
 
   faMoneyBillWave = faMoneyBillWave;
+  public chart: any;
 
   constructor() { }
 
