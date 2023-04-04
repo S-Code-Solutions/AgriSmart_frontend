@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 // import chart from 'chart.js';
 
 @Component({
@@ -11,6 +12,8 @@ export class FinanceMgtComponent implements OnInit {
 
   faMoneyBillWave = faMoneyBillWave;
   public chart: any;
+  paymentForm!: FormGroup;
+  selectedDate!: Date;
 
   constructor() { }
 
@@ -83,6 +86,35 @@ export class FinanceMgtComponent implements OnInit {
     if (tickerTapeElement) {
       tickerTapeElement.appendChild(script);
     }
+
+    this.paymentForm = new FormGroup({
+      invoice_number: new FormControl('', [
+        Validators.required,
+      ]),
+      payment_date: new FormControl('', [
+        Validators.required,
+      ]),
+      payment_category: new FormControl('', [
+        Validators.required
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+      ]),
+      payment_type: new FormControl('', [
+        Validators.required
+      ]),
+      amount: new FormControl('', [
+        Validators.required,
+      ])
+    });
   }
 
+  myFilter = (d: Date | null | undefined): boolean => {
+    const currentDate = new Date();
+    return (d ?? currentDate).getTime() >= currentDate.getTime();
+  }
+
+  savePayment() {
+
+  }
 }

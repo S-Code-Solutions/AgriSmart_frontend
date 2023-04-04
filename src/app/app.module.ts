@@ -55,6 +55,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {SharedModule} from "./core/shared/shared.module";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MaterialFileInputModule} from "ngx-material-file-input";
+import {NgCircleProgressModule} from "ng-circle-progress";
 
 @NgModule({
   declarations: [
@@ -114,6 +115,15 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
         SharedModule,
         MatProgressBarModule,
         MaterialFileInputModule,
+      NgCircleProgressModule.forRoot({
+        // set defaults here
+        radius: 100,
+        outerStrokeWidth: 16,
+        innerStrokeWidth: 8,
+        outerStrokeColor: "#78C000",
+        innerStrokeColor: "#C7E596",
+        animationDuration: 300
+      })
     ],
   providers: [DatePipe,StompService,
     {
