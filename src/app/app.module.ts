@@ -17,7 +17,6 @@ import { PredictAnlyComponent } from './components/components/predict-anly/predi
 import { WeatherForeComponent } from './components/components/weather-fore/weather-fore.component';
 import { FinanceMgtComponent } from './components/components/finance-mgt/finance-mgt.component';
 import { ColabFnCComponent } from './components/components/colab-fn-c/colab-fn-c.component';
-import { ReportComponent } from './components/components/report/report.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -56,6 +55,8 @@ import {SharedModule} from "./core/shared/shared.module";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MaterialFileInputModule} from "ngx-material-file-input";
 import {NgCircleProgressModule} from "ng-circle-progress";
+import {NgChartsModule} from "ng2-charts";
+import { MarketPlaceComponent } from './components/components/market-place/market-place.component';
 
 @NgModule({
   declarations: [
@@ -74,12 +75,12 @@ import {NgCircleProgressModule} from "ng-circle-progress";
     WeatherForeComponent,
     FinanceMgtComponent,
     ColabFnCComponent,
-    ReportComponent,
     CRecommendComponent,
     CResultComponent,
     FRecommendComponent,
     FResultComponent,
     OtpscreenComponent,
+    MarketPlaceComponent,
   ],
     imports: [
         BrowserModule,
@@ -115,15 +116,16 @@ import {NgCircleProgressModule} from "ng-circle-progress";
         SharedModule,
         MatProgressBarModule,
         MaterialFileInputModule,
-      NgCircleProgressModule.forRoot({
-        // set defaults here
-        radius: 100,
-        outerStrokeWidth: 16,
-        innerStrokeWidth: 8,
-        outerStrokeColor: "#78C000",
-        innerStrokeColor: "#C7E596",
-        animationDuration: 300
-      })
+        NgCircleProgressModule.forRoot({
+            // set defaults here
+            radius: 100,
+            outerStrokeWidth: 16,
+            innerStrokeWidth: 8,
+            outerStrokeColor: "#78C000",
+            innerStrokeColor: "#C7E596",
+            animationDuration: 300
+        }),
+        NgChartsModule
     ],
   providers: [DatePipe,StompService,
     {

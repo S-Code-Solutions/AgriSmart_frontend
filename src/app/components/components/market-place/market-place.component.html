@@ -1,0 +1,311 @@
+<div class="container cont-1">
+  <div class="box">
+
+    <div class="title">
+      <span class="block"></span>
+      <h4>
+        <fa-icon [icon]="faStore" class="side-btn-icon "></fa-icon>&nbsp;Marketplace Management<span></span></h4>
+    </div>
+
+  </div>
+</div>
+
+<section class="ms-4 me-4">
+  <section class="row d-flex justify-content-around p-3" style="background: #00AFEA;border-radius: 9px;">
+
+    <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
+         style="width: 300px; border-radius: 9px; background: white">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>Total Products</h4>
+          <p style="font-weight: bold; font-size: 40px">2022</p>
+          <h4>During 3 months</h4>
+        </div>
+        <div></div>
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Example monetization_on icon" fontIcon="monetization_on">
+            monetization_on
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
+         style="width: 300px; border-radius: 9px; background: white">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>Total Products</h4>
+          <p style="font-weight: bold; font-size: 40px">2022</p>
+          <h4>During 3 months</h4>
+        </div>
+        <div></div>
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Example monetization_on icon" fontIcon="monetization_on">
+            monetization_on
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
+         style="width: 300px; border-radius: 9px; background: white">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>Total Products</h4>
+          <p style="font-weight: bold; font-size: 40px">2022</p>
+          <h4>During 3 months</h4>
+        </div>
+        <div></div>
+        <div>
+          <mat-icon aria-hidden="false" aria-label="Example monetization_on icon" fontIcon="monetization_on">
+            monetization_on
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="row container mt-3 mb-3">
+
+  <mat-tab-group dynamicHeight>
+
+    <mat-tab label="Long tab">
+      <div class=" mat-elevation-z4 d-flex flex-column">
+        <h4 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="ms-4 mt-3">View Products</h4>
+        <div class="d-flex justify-content-between mt-3 ms-3">
+          <div class="p-2">Flex item 1</div>
+          <div class="p-2">Flex item 2</div>
+          <div class="p-2">Flex item 3</div>
+          <div class="p-2">Flex item 1</div>
+          <div class="p-2">Flex item 2</div>
+          <div class="p-2">Flex item 3</div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Long tab">
+
+      <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Add new Product</h3>
+
+      <form #form (ngSubmit)="saveProduct()" [formGroup]="productForm" class="form-container">
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input matInput formControlName="product_name" placeholder="product_name" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" placeholder="category" ngDefaultControl>
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Qty</mat-label>
+            <input matInput formControlName="qty" placeholder="qty" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Stock Price</mat-label>
+            <input matInput formControlName="stock_price" placeholder="stock_price" ngDefaultControl>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Retail Price</mat-label>
+            <input matInput formControlName="retail_price" placeholder="retail_price" ngDefaultControl>
+          </mat-form-field>
+
+          <div class="d-flex flex-column">
+            <div class="form-row">
+              <mat-form-field appearance="outline" formControlName="imageURL" ngDefaultControl style="width: 409.58px">
+                <mat-label>Add Image</mat-label>
+                <ngx-mat-file-input name="img_path" accept="image/*" formControlName="imageURL"
+                                    (change)="handleFileInput($event.target)" placeholder="imageURL"
+                                    ngDefaultControl></ngx-mat-file-input>
+                <mat-icon matSuffix>image</mat-icon>
+              </mat-form-field>
+            </div>
+            <img *ngIf="imageUrl" [src]="imageUrl" class="image" alt="img" style="width: 400px">
+
+          </div>
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Expire Date</mat-label>
+            <input matInput
+                   placeholder="expire_date"
+                   readonly
+                   formControlName="expire_date" [(ngModel)]="selectedDate" [matDatepickerFilter]="myFilter"
+                   [matDatepicker]="expire_date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="expire_date"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #expire_date></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" placeholder="location" ngDefaultControl>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Min Order Limit</mat-label>
+            <input matInput formControlName="min_order" placeholder="min_order" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Max Order Limit</mat-label>
+            <input matInput formControlName="max_order" placeholder="max_order" ngDefaultControl>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-row-btn">
+          <div class="row-btn">
+            <button mat-raised-button style="background: #e74c3c; color: white" type="reset">Reset</button>
+            <button mat-raised-button style="background: #2ecc71; color: white" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+
+    </mat-tab>
+
+    <mat-tab label="Long tab">
+
+      <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Add Product to Auction</h3>
+
+      <form #form (ngSubmit)="saveProductAuc()" [formGroup]="auctionForm" class="form-container">
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input matInput formControlName="product_name" placeholder="product_name" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" placeholder="category" ngDefaultControl>
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="form-row">
+
+          <div class="d-flex flex-column">
+            <div class="form-row">
+              <mat-form-field appearance="outline" formControlName="imageURL" ngDefaultControl style="width: 409.58px">
+                <mat-label>Add Image</mat-label>
+                <ngx-mat-file-input name="img_path" accept="image/*" formControlName="imageURL"
+                                    (change)="handleFileInput($event.target)" placeholder="imageURL"
+                                    ngDefaultControl></ngx-mat-file-input>
+                <mat-icon matSuffix>image</mat-icon>
+              </mat-form-field>
+            </div>
+            <img *ngIf="imageUrl" [src]="imageUrl" class="image" alt="img" style="width: 400px">
+
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Qty</mat-label>
+            <input matInput formControlName="qty" placeholder="qty" ngDefaultControl>
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Expire Date</mat-label>
+            <input matInput
+                   placeholder="expire_dates"
+                   readonly
+                   formControlName="expire_dates" [(ngModel)]="selectedDate" [matDatepickerFilter]="myFilter"
+                   [matDatepicker]="expire_dates">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="expire_dates"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #expire_dates></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" placeholder="location" ngDefaultControl>
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="form-row">
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Starting Price</mat-label>
+            <input matInput formControlName="starting_price" placeholder="starting_price" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Reserve Price</mat-label>
+            <input matInput formControlName="reserve_price" placeholder="reserve_price" ngDefaultControl>
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Auction Duration</mat-label>
+            <input matInput formControlName="auction_duration" placeholder="auction_duration" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Bid Increment</mat-label>
+            <input matInput formControlName="bid_increment" placeholder="bid_increment" ngDefaultControl>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-row">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Buy Now Price</mat-label>
+            <input matInput formControlName="buy_now_price" placeholder="buy_now_price" ngDefaultControl>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Auctioneer Contact</mat-label>
+            <input matInput formControlName="auctioneer_contact" placeholder="auctioneer_contact" ngDefaultControl>
+          </mat-form-field>
+
+        </div>
+
+        <div class="form-row-btn">
+          <div class="row-btn">
+            <button mat-raised-button style="background: #e74c3c; color: white" type="reset">Reset</button>
+            <button mat-raised-button style="background: #2ecc71; color: white" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+</section>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {faHome, faLeaf, faCogs, faCloudSun, faMoneyBillWave, faHandsHelping, faFileAlt} from '@fortawesome/free-solid-svg-icons';
+import {faHome, faLeaf, faCogs, faCloudSun, faMoneyBillWave, faHandsHelping, faStore} from '@fortawesome/free-solid-svg-icons';
 import {RouterOutlet} from "@angular/router";
 import { fader } from './route-animations'
 
@@ -29,7 +29,7 @@ export class LeftSideNavBarComponent implements OnInit {
   faCloudSun=faCloudSun
   faMoneyBillWave=faMoneyBillWave
   faHandsHelping=faHandsHelping
-  faFileAlt=faFileAlt
+  faStore=faStore
 
 
   constructor() { }
