@@ -1,5 +1,5 @@
 export class FertilizingDTO{
-  private _crop_name: string;
+  private _fertilize_name: string;
   private _fertilizer_type: string;
   private _fertilizer_app_method: string;
   private _fertilizer_app_fre: string;
@@ -8,9 +8,11 @@ export class FertilizingDTO{
   private _application_timing: string;
   private _fertigation: string;
   private _fertlizing_date: string;
+  private _message: string;
+  private _crop_id: string;
 
-  constructor(crop_name: string, fertilizer_type: string, fertilizer_app_method: string, fertilizer_app_fre: string, application_rate: string, fertilizer_placement: string, application_timing: string, fertigation: string, fertlizing_date: string) {
-    this._crop_name = crop_name;
+  constructor(fertilize_name: string, fertilizer_type: string, fertilizer_app_method: string, fertilizer_app_fre: string, application_rate: string, fertilizer_placement: string, application_timing: string, fertigation: string, fertlizing_date: string, message: string, crop_id: string) {
+    this._fertilize_name = fertilize_name;
     this._fertilizer_type = fertilizer_type;
     this._fertilizer_app_method = fertilizer_app_method;
     this._fertilizer_app_fre = fertilizer_app_fre;
@@ -19,14 +21,16 @@ export class FertilizingDTO{
     this._application_timing = application_timing;
     this._fertigation = fertigation;
     this._fertlizing_date = fertlizing_date;
+    this._message = message;
+    this._crop_id = crop_id;
   }
 
-  get crop_name(): string {
-    return this._crop_name;
+  get fertilize_name(): string {
+    return this._fertilize_name;
   }
 
-  set crop_name(value: string) {
-    this._crop_name = value;
+  set fertilize_name(value: string) {
+    this._fertilize_name = value;
   }
 
   get fertilizer_type(): string {
@@ -91,5 +95,21 @@ export class FertilizingDTO{
 
   set fertlizing_date(value: string) {
     this._fertlizing_date = value;
+  }
+
+  get message(): string {
+    return this._message;
+  }
+
+  set message(value: string) {
+    this._message = value;
+  }
+
+  get crop_id(): string {
+    return this._crop_id;
+  }
+
+  set crop_id(value: string) {
+    this._crop_id = value;
   }
 }
