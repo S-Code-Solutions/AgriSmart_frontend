@@ -1,7 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCarrot,
+  faChartLine,
+  faDownload, faDrumstickBite, faMale,
+  faMoneyBillWave, faSeedling, faSpinner, faTractor,
+  faUpload,
+  faWallet
+} from '@fortawesome/free-solid-svg-icons';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatTableDataSource} from "@angular/material/table";
 // import chart from 'chart.js';
+
+export interface PeriodicElement {
+  Transaction: string;
+  Amount: number;
+  DateandTime: string;
+  Status: string;
+  Action: any;
+}
+
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {Transaction: 'Transcation-1', Amount: 1000, DateandTime: '2024-04-24', Status: 'Expense', Action:''},
+  {Transaction: 'Transcation-2', Amount: 2000, DateandTime: '2024-04-24', Status: 'Income', Action:''},
+  {Transaction: 'Transcation-3', Amount: 3000, DateandTime: '2024-04-24', Status: 'Pending', Action:''},
+];
 
 @Component({
   selector: 'app-finance-mgt',
@@ -14,6 +37,8 @@ export class FinanceMgtComponent implements OnInit {
   public chart: any;
   paymentForm!: FormGroup;
   selectedDate!: Date;
+  displayedColumns: string[] = ['Transaction', 'Amount', 'DateandTime', 'Status','Action'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor() { }
 
@@ -117,4 +142,20 @@ export class FinanceMgtComponent implements OnInit {
   savePayment() {
 
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  protected readonly faWallet = faWallet;
+  protected readonly faDownload = faDownload;
+  protected readonly faUpload = faUpload;
+  protected readonly faChartLine = faChartLine;
+  protected readonly faCarrot = faCarrot;
+  protected readonly faDrumstickBite = faDrumstickBite;
+  protected readonly faTractor = faTractor;
+  protected readonly faSeedling = faSeedling;
+  protected readonly faMale = faMale;
+  protected readonly faSpinner = faSpinner;
 }

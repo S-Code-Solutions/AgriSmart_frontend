@@ -15,55 +15,55 @@
   <section class="container row d-flex justify-content-around mt-4">
 
     <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
-         style="width: 300px; border-radius: 9px; background: #00AFEA">
+         style="width: 300px; border-radius: 9px; background: #EAE9FB;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
       <div class="d-flex flex-column align-items-center justify-content-center">
 
-          <div class="circle  text-center">
-            <mat-icon aria-hidden="false" aria-label="Example ballot icon" fontIcon="ballot">ballot
+          <div class="circle text-center mt-3">
+            <mat-icon aria-hidden="false" aria-label="Example ballot icon" fontIcon="ballot" style="color: #156AD8; font-size: 55px;width: 60px; height: 60px;margin-top: 22px" >
             </mat-icon>
           </div>
 
         <div>
-          <p>All Orders</p>
+          <p class="mt-3" style="font-weight: bold; font-size: 22px">All Orders</p>
         </div>
         <div>
-          <h4>48</h4>
+          <h4 class="mt-3 mb-3" style="font-weight: bold; font-size: 40px;color: #156AD8">48</h4>
         </div>
       </div>
     </div>
 
     <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
-         style="width: 300px; border-radius: 9px; background: #00AFEA">
+         style="width: 300px; border-radius: 9px; background: #FEF3E4;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
       <div class="d-flex flex-column align-items-center justify-content-center">
         <div>
-          <div class="circle  text-center">
-            <mat-icon aria-hidden="false" aria-label="Example stacked_line_chart icon" fontIcon="stacked_line_chart">stacked_line_chart
+          <div class="circle text-center mt-3">
+            <mat-icon aria-hidden="false" aria-label="Example stacked_line_chart icon" fontIcon="stacked_line_chart" style="color: #e67e22; font-size: 55px;width: 60px; height: 60px;margin-top: 22px">
             </mat-icon>
           </div>
         </div>
         <div>
-          <p>Ongoing Orders</p>
+          <p class="mt-3" style="font-weight: bold; font-size: 22px">Ongoing Orders</p>
         </div>
         <div>
-          <h4>8</h4>
+          <h4 class="mt-3 mb-3" style="font-weight: bold; font-size: 40px;color: #e67e22">8</h4>
         </div>
       </div>
     </div>
 
     <div class="p-2 col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4"
-         style="width: 300px; border-radius: 9px; background: #00AFEA">
+         style="width: 300px; border-radius: 9px; background: #E8F8F9;overflow-y: scroll;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
       <div class="d-flex flex-column align-items-center justify-content-center">
         <div>
-          <div class="circle text-center">
-            <mat-icon aria-hidden="false" aria-label="Example assignment_turned_in icon" fontIcon="assignment_turned_in">assignment_turned_in
+          <div class="circle text-center mt-3">
+            <mat-icon aria-hidden="false" aria-label="Example assignment_turned_in icon" fontIcon="assignment_turned_in" style="color: #40B77F; font-size: 55px;width: 60px; height: 60px;margin-top: 22px">
             </mat-icon>
           </div>
         </div>
         <div>
-          <p>Finished Orders</p>
+          <p class="mt-3" style="font-weight: bold; font-size: 22px">Finished Orders</p>
         </div>
         <div>
-          <h4>40</h4>
+          <h4 class="mt-3 mb-3" style="font-weight: bold; font-size: 40px;color: #40B77F">40</h4>
         </div>
       </div>
     </div>
@@ -71,46 +71,93 @@
 
 </section>
 
-<section>
+<mat-tab-group dynamicHeight class="mt-4">
+  <mat-tab label="Order List">
+    <div class="">
+      <section>
 
-  <section class="container row d-flex justify-content-around mt-4">
+        <section class="container row d-flex justify-content-around mt-4 mb-3 p-4">
 
-    <div class="p-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6"
-         style="width: 500px; border-radius: 9px; background: #00AFEA">
+          <div class="p-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6"
+               style="width: 500px;height: 216px; border-radius: 9px; background: #EAE9FB; box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
 
-      <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Incoming Orders</h3>
+            <h3 style="font-weight: bold; font-size: 1.5rem;color: #156AD8" class="mt-3 ms-4">Incoming Orders</h3>
+            <div class="d-flex flex-column" style="overflow-y: scroll;width: 500px;height: 162px;">
+              <div class="d-flex flex-row p-2 mt-3" style="background: white; border-radius: 8px">
+                <div class="p-2 text-center" style="background: #e74c3c;border-radius: 5px; width: 60px; height: 60px">
+                  <p style="color: white">24</p>
+                  <p style="color: white;margin-top: -6px">Apr</p>
+                </div>
+                <div class="ms-2">
+                  <p>sceduled spraying was not performed</p>
+                  <p>maize #1</p>
+                </div>
+              </div>
 
-      <div class="d-flex flex-row p-2">
-        <div class="p-2 text-center" style="background: #9a0b00;border-radius: 5px; width: 60px; height: 60px">
-          <p style="color: white">2D</p>
-          <p style="color: white;margin-top: -6px">due</p>
-        </div>
-        <div class="ms-2">
-          <p>sceduled spraying was not performed</p>
-          <p>maize #1</p>
-        </div>
-      </div>
+              <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px">
+                <div class="p-2 text-center" style="background: #27ae60;border-radius: 5px; width: 60px; height: 60px">
+                  <p style="color: white">25</p>
+                  <p style="color: white;margin-top: -6px">Apr</p>
+                </div>
+                <div class="ms-2">
+                  <p>sceduled spraying was not performed</p>
+                  <p>maize #1</p>
+                </div>
+              </div>
 
+              <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px">
+                <div class="p-2 text-center" style="background: #27ae60;border-radius: 5px; width: 60px; height: 60px">
+                  <p style="color: white">25</p>
+                  <p style="color: white;margin-top: -6px">Apr</p>
+                </div>
+                <div class="ms-2">
+                  <p>sceduled spraying was not performed</p>
+                  <p>maize #1</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="p-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6"
+               style="width: 500px;height: 216px; border-radius: 9px; background: #E8F8F9; box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
+
+            <h3 style="font-weight: bold; font-size: 1.5rem;color: #209F2E" class="mt-3 ms-4">Ongoing Orders</h3>
+            <div class="d-flex flex-column" style="overflow-y: scroll;width: 500px;height: 162px;">
+              <div class="d-flex flex-row p-2 mt-3" style="background: white; border-radius: 8px">
+                <div class="p-2 text-center" style="background: #e74c3c;border-radius: 5px; width: 60px; height: 60px">
+                  <p style="color: white">24</p>
+                  <p style="color: white;margin-top: -6px">Apr</p>
+                </div>
+                <div class="ms-2">
+                  <p>sceduled spraying was not performed</p>
+                  <p>maize #1</p>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px">
+                <div class="p-2 text-center" style="background: #27ae60;border-radius: 5px; width: 60px; height: 60px">
+                  <p style="color: white">25</p>
+                  <p style="color: white;margin-top: -6px">Apr</p>
+                </div>
+                <div class="ms-2">
+                  <p>sceduled spraying was not performed</p>
+                  <p>maize #1</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </section>
     </div>
-
-    <div class="p-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6"
-         style="width: 500px; border-radius: 9px; background: #00AFEA">
-
-      <h3 style="font-weight: bold; font-size: 1.5rem;color: #8d6e63" class="mt-3 ms-4">Ongoing Orders</h3>
-
-      <div class="d-flex flex-row p-2">
-        <div class="p-2 text-center" style="background: #9a0b00;border-radius: 5px; width: 60px; height: 60px">
-          <p style="color: white">2D</p>
-          <p style="color: white;margin-top: -6px">due</p>
-        </div>
-        <div class="ms-2">
-          <p>sceduled spraying was not performed</p>
-          <p>maize #1</p>
-        </div>
-      </div>
-
+  </mat-tab>
+  <mat-tab label="Order Details">
+    <div class="">
     </div>
+  </mat-tab>
+</mat-tab-group>
 
-  </section>
 
-</section>

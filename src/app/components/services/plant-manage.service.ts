@@ -31,7 +31,7 @@ export class PlantManageService {
       planting_date: complaintDTO.planting_date,
       water_duration: complaintDTO.water_duration,
       message: complaintDTO.message,
-      crop_id: complaintDTO.crop_id
+      crop_id: complaintDTO.crop_id,
     }, {
       headers:new HttpHeaders({
         'Content-Type':  'application/json',
@@ -136,4 +136,12 @@ export class PlantManageService {
     })
   }
 
+  getAllHarvest() {
+    return this.http.get<any>(this.baseUrl+'/harvest/getallharvest', {
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + JSON.parse(this.cookieService.get('token')),
+      })
+    })
+  }
 }

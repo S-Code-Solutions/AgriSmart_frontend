@@ -57,6 +57,9 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
 import {NgCircleProgressModule} from "ng-circle-progress";
 import {NgChartsModule} from "ng2-charts";
 import { MarketPlaceComponent } from './components/components/market-place/market-place.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import { DAnalyseComponent } from './components/components/predict-anly/disease/d-analyse/d-analyse.component';
+import { DResultComponent } from './components/components/predict-anly/disease/d-result/d-result.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,8 @@ import { MarketPlaceComponent } from './components/components/market-place/marke
     FResultComponent,
     OtpscreenComponent,
     MarketPlaceComponent,
+    DAnalyseComponent,
+    DResultComponent,
   ],
     imports: [
         BrowserModule,
@@ -125,7 +130,8 @@ import { MarketPlaceComponent } from './components/components/market-place/marke
             innerStrokeColor: "#C7E596",
             animationDuration: 300
         }),
-        NgChartsModule
+        NgChartsModule,
+        MatBadgeModule
     ],
   providers: [DatePipe,StompService,
     {

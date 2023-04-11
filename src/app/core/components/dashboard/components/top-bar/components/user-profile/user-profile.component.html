@@ -1,10 +1,46 @@
+<!--<form class="d-flex ms-3" >-->
+<!--  -->
+<!--</form>-->
+
+
 <form class="d-flex ms-3" >
+  <div id="wrap-3" [matMenuTriggerFor]="menu2"   >
+    <div class="example-button-container d-flex flex-row">
+      <button class="btn-login2 d-flex justify-content-center align-items-center flex-column" matBadge="2" matBadgePosition="below after" mat-fab color="Basic"  type="button">
+        <mat-icon class="material-symbols-outlined mat-icon2">notifications</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-menu #menu2="matMenu" >
+    <div mat-menu-item class="btn-logins"  >
+      <div class="d-flex flex-row" style="background: #FEF3E4;" >
+        <div class="p-2">
+          <mat-icon style="color: #e74c3c" class="material-symbols-outlined mat-icon2">adjust</mat-icon>
+        </div>
+        <div class="p-2">
+          <p>Today is the plant watering date 23</p>
+        </div>
+      </div>
+    </div>
+    <div mat-menu-item class="btn-logins"  >
+      <div class="d-flex flex-row" style="background: #E8F8F9;">
+        <div class="p-2">
+          <mat-icon style="color: #2ecc71" class="material-symbols-outlined mat-icon2">adjust</mat-icon>
+        </div>
+        <div class="p-2">
+          <p>Today is the plant watering and fertilizing date 23</p>
+        </div>
+      </div>
+    </div>
+  </mat-menu>
+
+
   <div id="wrap-2" [matMenuTriggerFor]="menu" >
     <div class="example-button-container d-flex flex-row">
-      <h6 class="flex-column mt-2" style="font-weight: bold">{{Username}}</h6>&nbsp;
       <button class="btn-login2 d-flex justify-content-center align-items-center flex-column" mat-fab color="Basic"  type="button">
         <mat-icon class="material-symbols-outlined mat-icon2">account_circle</mat-icon>
-      </button>
+      </button>&nbsp;
+      <h6 class="flex-column mt-2" style="font-weight: bold">{{Username}}</h6>
     </div>
   </div>
   <mat-menu #menu="matMenu" >

@@ -6,6 +6,7 @@ import {faCogs} from '@fortawesome/free-solid-svg-icons';
 import {FormControl, FormGroup} from "@angular/forms";
 import {PredictAnlyService} from "../../services/predict-anly.service";
 import {CookieService} from "ngx-cookie";
+import {DAnalyseComponent} from "./disease/d-analyse/d-analyse.component";
 
 @Component({
   selector: 'app-predict-anly',
@@ -119,4 +120,21 @@ export class PredictAnlyComponent implements OnInit {
     })
   }
 
+  openPDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = "row";
+    dialogConfig.width = '30%';
+    dialogConfig.height = 'auto';
+    // console.log(row);
+    console.log('----------------------------');
+    const dialogRef = this.dialog.open(DAnalyseComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("response code1")
+      console.log(result)
+      console.log("response code2")
+      // this.refreshTable();
+    });
+  }
 }

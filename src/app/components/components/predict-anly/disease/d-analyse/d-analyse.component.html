@@ -1,0 +1,19 @@
+<h3 class="text-center head1 mt-2 mb-4" style="color: #1C8727;font-weight: bold;font-size: 27px">Crop Disease Analyse</h3>
+<div class="text-center mt-4 mb-2">
+  <form  [formGroup]="DRForm">
+      <div class="d-flex flex-column justify-content-center">
+        <div class="form-row">
+          <mat-form-field appearance="outline" formControlName="imageURL" ngDefaultControl
+                          style="width: 409.58px">
+            <mat-label>Image URL</mat-label>
+            <ngx-mat-file-input name="img_path" accept="image/*" formControlName="imageURL"
+                                (change)="handleFileInput($event.target)" placeholder="imageURL"
+                                ngDefaultControl></ngx-mat-file-input>
+            <mat-icon matSuffix>image</mat-icon>
+          </mat-form-field>
+        </div>
+        <img *ngIf="imageUrl" [src]="imageUrl" class="image" alt="img" style="width: 400px">
+      </div>
+  <button mat-raised-button class="submitbtn1" (click)="predictDisease()" style="background: #2ecc71;color: white">Analyse Disease</button>
+  </form>
+</div>

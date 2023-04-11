@@ -63,7 +63,10 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   components!: Array<CropDTO>[];
   displayedColumns: string[] = ['crop_name', 'crop_variety', 'crop_status', 'action'];
   dataSource!: MatTableDataSource<Array<CropDTO>>;
-  private allComponentsSub!: Subscription;
+  private allCropsSub!: Subscription;
+  private allPlantingsSub!: Subscription;
+  private allFertilizsSub!: Subscription;
+  private allHarvestsSub!: Subscription;
   ofListofCrops!: any[];
   ofListofCropss: string[] = ['Planting Details', 'Fertilizing Details', 'Harvesting Details'];
 
@@ -106,6 +109,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
   plantingDetails!: any[];
   fertiliingDetails!: any[];
+  harvestDetails!: any[];
 
   fileToUpload: any;
   // fileName: any;
@@ -571,7 +575,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
 
   getCropTableList(){
-    this.allComponentsSub = this.cropManageService.getAllCrops()
+    this.allCropsSub = this.cropManageService.getAllCrops()
       // .pipe(timeout(4000))
       .subscribe(result => {
         console.log(result)
@@ -614,6 +618,8 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   getCropLists(crop_name: any, crop_id:any) {
     console.log("Item clck name");
     console.log(crop_name)
+    console.log("Item clck crop_id");
+    console.log(crop_id)
     this.loading = true;
     setTimeout(() => {
       this.showComponent = false;
@@ -672,6 +678,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       console.log(item)
       this.loading = true;
       setTimeout(() => {
+        this.getHarvestingList();
         this.showComponent = false;
         this.loading = false;
         this.fertilizingtable = false
@@ -840,7 +847,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       Notiflix.Notify.success('Fertilizing Method Successfully Added',{
         position: 'center-bottom'
       });
-      this.getCropTableList()
+      this.getFertilizingList()
     }, error => {
       console.log(error)
       Notiflix.Notify.failure("Fertilizing Method Already Exists",{
@@ -867,7 +874,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       Notiflix.Notify.success('Harvesting Method Successfully Added',{
         position: 'center-bottom'
       });
-      this.getCropTableList()
+      this.getHarvestingList()
     }, error => {
       console.log(error)
       Notiflix.Notify.failure("Harvesting Method Already Exists",{
@@ -877,7 +884,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   getPlantingList(){
-    this.allComponentsSub = this.plantManageService.getAllPlants()
+    this.allPlantingsSub = this.plantManageService.getAllPlants()
       // .pipe(timeout(4000))
       .subscribe(result => {
         console.log(result)
@@ -889,7 +896,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   getFertilizingList(){
-    this.allComponentsSub = this.plantManageService.getAllFerts()
+    this.allFertilizsSub = this.plantManageService.getAllFerts()
       // .pipe(timeout(4000))
       .subscribe(result => {
         console.log(result)
@@ -901,12 +908,12 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   getHarvestingList(){
-    this.allComponentsSub = this.plantManageService.getAllFerts()
+    this.allHarvestsSub = this.plantManageService.getAllHarvest()
       // .pipe(timeout(4000))
       .subscribe(result => {
         console.log(result)
         // this.dataSource = result.content;
-        this.fertiliingDetails = result.content;
+        this.harvestDetails = result.content;
       }, error => {
         console.log(error);
       });
@@ -942,15 +949,15 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
   savePlantDtail() {
     this.plantManageService.savePlant(new PlantDTO(
-      this.plantingForm.get('plantMethod')?.value,
-      this.plantingForm.get('planting_location')?.value,
-      this.plantingForm.get('planting_density')?.value,
-      this.plantingForm.get('seeding_rate')?.value,
-      this.plantingForm.get('seeding_depth')?.value,
-      this.plantingForm.get('soil_preparation')?.value,
-      this.plantingForm.get('planting_date')?.value,
-      this.plantingForm.get('water_duration')?.value,
-      '',
+      this.plantingDtailForm.get('plantMethod')?.value,
+      this.plantingDtailForm.get('planting_location')?.value,
+      this.plantingDtailForm.get('planting_density')?.value,
+      this.plantingDtailForm.get('seeding_rate')?.value,
+      this.plantingDtailForm.get('seeding_depth')?.value,
+      this.plantingDtailForm.get('soil_preparation')?.value,
+      this.plantingDtailForm.get('planting_date')?.value,
+      this.plantingDtailForm.get('water_duration')?.value,
+      'message',
       this.cropId
     )).subscribe(result => {
       console.log("Plant Method Successfully Added")
@@ -958,7 +965,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
       Notiflix.Notify.success('Plant Method Successfully Added',{
         position: 'center-bottom'
       });
-      this.getCropTableList()
+      this.getPlantingList()
     }, error => {
       console.log(error)
       Notiflix.Notify.failure("Plant Method Already Exists",{
