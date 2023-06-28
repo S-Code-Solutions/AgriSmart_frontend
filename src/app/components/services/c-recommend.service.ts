@@ -9,13 +9,13 @@ import {Observable} from "rxjs";
 })
 export class CRecommendService {
 
-  Url = environment.baseUrl;
+  Url = 'http://127.0.0.1:5000/';
 
 
   constructor(private http: HttpClient) { }
 
   getCropData(cropDTO: CropsDTO):Observable<any>  {
-    return this.http.post(this.Url+'/predict_crop', {
+    return this.http.post('http://localhost:5000/predict_crop', {
       N: cropDTO.N,
       P: cropDTO.P,
       K: cropDTO.K,

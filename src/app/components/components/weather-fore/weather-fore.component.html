@@ -17,62 +17,55 @@
 
   <div class="d-flex flex-column">
     <div class="p-2">
-      <h2 style="font-weight: bold; font-size: 35px; color: #618EE5">10:44 AM</h2>
+      <h2 style="font-weight: bold; font-size: 35px; color: #618EE5">{{currentTime}}</h2>
     </div>
     <div class="p-2 mt-1">
-      <p style="color: #3C415B; font-weight: bold; font-size: 20px">Monday, 24 April, 2023</p>
+      <p style="color: #3C415B; font-weight: bold; font-size: 20px">{{currentDate}}</p>
     </div>
     <div class="p-2">
       <div class="d-flex flex-row">
         <div class="p-2">
           <mat-icon style="font-size: 25px; color: #618EE5" aria-hidden="false" aria-label="Example sunny icon" fontIcon="sunny" class="mt-2"></mat-icon>
         </div>
-        <div style="font-size: 25px; color: #618EE5; font-weight: bold" class="p-2">Good Morning, Udarasan</div>
+        <div style="font-size: 25px; color: #618EE5; font-weight: bold" class="p-2">Good {{greeting}}, Udarasan</div>
       </div>
     </div>
   </div>
 
 </section>
 
+<div class="d-flex justify-content-end container">
+  <form [formGroup]="form" class="mt-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Select your city</mat-label>
+      <mat-select [formControl]="foodControl" name="food" (selectionChange)="someMethod($event.value)">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let food of foods" [value]="food.value">
+          {{food.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
 <section class="row ms-3">
 
   <section class="row container mt-3 mb-3">
 
-    <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sm-8 ms-6 p-2"
-         style="width: 555px; height: 184px; border-radius: 9px; background: #C3E1FD; box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 ms-6 p-2"
+         style="width: 530px; height: 184px; border-radius: 9px; background: #C3E1FD; box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
 
-      <h3 style="font-weight: bold; font-size: 1.5rem;color: #156AD8" class="mt-3 ms-4">Weather Tips</h3>
-      <div class="d-flex flex-column" style="overflow-y: scroll;width: 544px;height: 122px;">
-        <div class="d-flex flex-row p-2 mt-3" style="background: white; border-radius: 8px">
-          <div class="p-2 text-center" style="background: #e74c3c;border-radius: 5px; width: 60px; height: 60px">
-            <p style="color: white">24</p>
-            <p style="color: white;margin-top: -6px">Apr</p>
-          </div>
-          <div class="ms-2">
-            <p>sceduled spraying was not performed</p>
-            <p>maize #1</p>
-          </div>
-        </div>
+      <h3 style="font-weight: bold; font-size: 1.5rem;color: #156AD8" class="mt-3 ms-4">Good Weather Tips</h3>
+      <div class="d-flex flex-column" style="overflow-y: scroll;width: 528px;height: 122px;" >
 
-        <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px">
+        <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px" *ngFor="let tips of goodTips; let i = index">
           <div class="p-2 text-center" style="background: #27ae60;border-radius: 5px; width: 60px; height: 60px">
-            <p style="color: white">25</p>
-            <p style="color: white;margin-top: -6px">Apr</p>
+            <p style="color: white">G</p>
+            <p style="color: white;margin-top: -6px">Tip</p>
           </div>
           <div class="ms-2">
-            <p>sceduled spraying was not performed</p>
-            <p>maize #1</p>
-          </div>
-        </div>
-
-        <div class="d-flex flex-row p-2 mt-2" style="background: white; border-radius: 8px">
-          <div class="p-2 text-center" style="background: #27ae60;border-radius: 5px; width: 60px; height: 60px">
-            <p style="color: white">25</p>
-            <p style="color: white;margin-top: -6px">Apr</p>
-          </div>
-          <div class="ms-2">
-            <p>sceduled spraying was not performed</p>
-            <p>maize #1</p>
+            <p>{{ i }}: </p>
+            <p>{{ tips }}</p>
           </div>
         </div>
 
@@ -80,43 +73,23 @@
 
     </div>
 
-    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 ms-6 p-2 d-flex  justify-content-around align-items-center"
-         style="width: 480px; border-radius: 9px; background: #C3E1FD;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;">
 
-      <div class="d-flex justify-content-around align-items-center">
-        <div class="p-2" style="background: white; border-radius: 5px; width: 130px; height: 80px;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;">
-          <div class="d-flex flex-row justify-content-between">
-            <div class="p-2">
-              <h4 style="font-weight: bold" class="text-center">Water</h4>
-              <h4 class="mt-3 text-center" style="color: red">Bad</h4>
-            </div>
-            <div class="p-2">
-              <h4 class="mt-3" style="color: red">20%</h4>
-            </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 ms-6 p-2"
+         style="width: 530px; height: 184px; border-radius: 9px; background: #C3E1FD; box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px">
+
+      <h3 style="font-weight: bold; font-size: 1.5rem;color: #156AD8" class="mt-3 ms-4">Bad Weather Tips</h3>
+      <div class="d-flex flex-column" style="overflow-y: scroll;width: 528px;height: 122px;">
+        <div class="d-flex flex-row p-2 mt-3" style="background: white; border-radius: 8px" *ngFor="let tips of badTips; let i = index">
+          <div class="p-2 text-center" style="background: #e74c3c;border-radius: 5px; width: 60px; height: 60px">
+            <p style="color: white">B</p>
+            <p style="color: white;margin-top: -6px">Tip</p>
+          </div>
+          <div class="ms-2">
+            <p>{{ i }}: </p>
+            <p>{{ tips }}</p>
           </div>
         </div>
-        <div class="p-2 ms-3" style="background: white; border-radius: 5px; width: 130px; height: 80px;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;">
-          <div class="d-flex flex-row justify-content-between">
-            <div class="p-2">
-              <h4 style="font-weight: bold" class="text-center">Fertilizer</h4>
-              <h4 class="mt-3 text-center" style="color: green">Good</h4>
-            </div>
-            <div class="p-2">
-              <h4 class="mt-3" style="color: green">20%</h4>
-            </div>
-          </div>
-        </div>
-        <div class="p-2 ms-3" style="background: white; border-radius: 5px; width: 130px; height: 80px;box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;">
-          <div class="d-flex flex-row justify-content-between">
-            <div class="p-2">
-              <h4 style="font-weight: bold" class="text-center">Pest</h4>
-              <h4 class="mt-3 text-center" style="color: red">Bad</h4>
-            </div>
-            <div class="p-2">
-              <h4 class="mt-3" style="color: red">20%</h4>
-            </div>
-          </div>
-        </div>
+
       </div>
 
     </div>
@@ -139,19 +112,19 @@
               <mat-icon aria-hidden="false" aria-label="Example location_on icon" fontIcon="location_on" style="color: #3D6C9A">location_on
               </mat-icon>
             </div> &nbsp;
-            <div style="font-weight: bold;font-size: 18px; color: #3D6C9A">Bambalapitiya</div>
+            <div style="font-weight: bold;font-size: 18px; color: #3D6C9A">{{selected_district}}</div>
           </div>
 
         </div>
         <div class="p-2 text-center d-flex justify-content-center"><img src="https://i.ibb.co/2M6FsTX/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-41-58-AM-removebg-preview.png"></div>
         <div class="p-2 text-center">
-          <p style="font-weight: bold; color: #3D6C9A">Today, 24 April</p>
+          <p style="font-weight: bold; color: #3D6C9A">{{currentDate}}</p>
         </div>
         <div class="p-2 text-center">
-          <h1 style="font-weight: bold; font-size: 60px; color: #3D6C9A">29<span>&deg;</span></h1>
+          <h1 style="font-weight: bold; font-size: 60px; color: #3D6C9A">{{tempeture}}<span>&deg;</span></h1>
         </div>
         <div class="p-2 text-center">
-          <p style="font-size: 30px; color: #3D6C9A">Sunny</p>
+          <p style="font-size: 30px; color: #3D6C9A">{{tempeturetext}}</p>
         </div>
         <div class="p-2 text-center">
           <div class="d-flex flex-row justify-content-center">
@@ -160,7 +133,7 @@
             </div>
             <div style="font-weight: bold; color: #3D6C9A">&nbsp;Wind</div>
             <div style="font-weight: bold; color: white">&nbsp;|&nbsp;</div>
-            <div style="font-weight: bold; color: #3D6C9A">19 Km/h</div>
+            <div style="font-weight: bold; color: #3D6C9A">{{windmph}} Km/h</div>
           </div>
         </div>
         <div class="p-2 text-center">
@@ -171,7 +144,7 @@
             </div>
             <div style="font-weight: bold; color: #3D6C9A">&nbsp;Hum</div>
             <div style="font-weight: bold; color: white">&nbsp;|&nbsp;</div>
-            <div style="font-weight: bold; color: #3D6C9A">22 %</div>
+            <div style="font-weight: bold; color: #3D6C9A">{{humidity}} %</div>
           </div>
         </div>
       </div>
@@ -186,7 +159,7 @@
                class="p-2 d-flex flex-column justify-content-center text-center">
             <img src="https://i.ibb.co/7tFLNXN/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-42-09-AM-removebg-preview.png" alt="img" class="p-2">
             <p style="font-weight: bold; color: white">Mon</p>
-            <p class="mb-2" style="color: white">28<span>&deg;</span></p>
+            <p class="mb-2" style="color: white">{{day1tempmax}} > {{day1tempmin}}<span>&deg;</span></p>
           </div>
         </div>
         <div class="p-2">
@@ -194,7 +167,7 @@
                class="p-2 d-flex flex-column justify-content-center text-center">
             <img src="https://i.ibb.co/ByX12nV/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-42-14-AM-removebg-preview.png" alt="img" class="mt-2 mb-2">
             <p style="font-weight: bold; color: white">Tue</p>
-            <p class="mb-2"  style="color: white">32<span>&deg;</span></p>
+            <p class="mb-2"  style="color: white">{{day2tempmax}} > {{day2tempmin}}<span>&deg;</span></p>
           </div>
         </div>
         <div class="p-2">
@@ -202,7 +175,7 @@
                class="p-2 d-flex flex-column justify-content-center text-center">
             <img src="https://i.ibb.co/cCZmTgX/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-42-18-AM-removebg-preview.png" alt="img" class="mt-2 mb-2">
             <p style="font-weight: bold; color: white">Wed</p>
-            <p class="mb-2" style="color: white">28<span>&deg;</span></p>
+            <p class="mb-2" style="color: white">{{day3tempmax}} > {{day3tempmin}}<span>&deg;</span></p>
           </div>
         </div>
         <div class="p-2">
@@ -210,7 +183,7 @@
                class="p-2 d-flex flex-column justify-content-center text-center">
             <img src="https://i.ibb.co/2M6FsTX/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-41-58-AM-removebg-preview.png" alt="img" class="mt-2 mb-2">
             <p style="font-weight: bold; color: white">Thur</p>
-            <p class="mb-2" style="color: white">30<span>&deg;</span></p>
+            <p class="mb-2" style="color: white">{{day1tempmax}} > {{day1tempmin}}<span>&deg;</span></p>
           </div>
         </div>
         <div class="p-2">
@@ -218,7 +191,7 @@
                class="p-2 d-flex flex-column justify-content-center text-center">
             <img src="https://i.ibb.co/7tFLNXN/Weatherly-Craftwork-Google-Chrome-4-5-2023-10-42-09-AM-removebg-preview.png" alt="img" class="mt-2 mb-2">
             <p style="font-weight: bold; color: white">Fri</p>
-            <p class="mb-2" style="color: white">29<span>&deg;</span></p>
+            <p class="mb-2" style="color: white">{{day2tempmax}} > {{day2tempmin}}<span>&deg;</span></p>
           </div>
         </div>
       </div>

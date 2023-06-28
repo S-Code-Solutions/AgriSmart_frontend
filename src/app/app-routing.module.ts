@@ -10,6 +10,10 @@ import {WeatherForeComponent} from "./components/components/weather-fore/weather
 import {FinanceMgtComponent} from "./components/components/finance-mgt/finance-mgt.component";
 import {ColabFnCComponent} from "./components/components/colab-fn-c/colab-fn-c.component";
 import {MarketPlaceComponent} from "./components/components/market-place/market-place.component";
+import {
+  UserProfileComponent
+} from "./core/components/dashboard/components/top-bar/components/user-profile/user-profile.component";
+import {UserPComponent} from "./components/components/user-p/user-p.component";
 
 
 const routes: Routes = [
@@ -24,6 +28,8 @@ const routes: Routes = [
       {path: 'finance', component: FinanceMgtComponent,canActivate: [AuthGuard] },
       {path: 'colabfc', component: ColabFnCComponent,canActivate: [AuthGuard] },
       {path: 'market', component: MarketPlaceComponent,canActivate: [AuthGuard] },
+      {path: 'profile', component: UserPComponent,canActivate: [AuthGuard] },
+
     ]},
   { path: 'shared', loadChildren: () => import('./core/shared/shared.module').then(m => m.SharedModule) },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}

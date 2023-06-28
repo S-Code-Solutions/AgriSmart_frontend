@@ -16,6 +16,7 @@ export class CRecommendComponent implements OnInit {
 
   CRForm!: FormGroup;
   cookieValues :any
+  soilValues:any
 
   constructor(public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -49,14 +50,18 @@ export class CRecommendComponent implements OnInit {
       ])
     });
     this.cookieValues = JSON.parse(this.cookieService.get('Cli'));
+    this.soilValues = JSON.parse(this.cookieService.get('Soil'));
+    console.log("=================== cookieValues ==============================")
     console.log(this.cookieValues)
+    console.log(this.soilValues)
+    console.log("=================== soilValues ==============================")
     this.CRForm.setValue({
-      N:'',
-      P:'',
-      K :'',
+      N:JSON.stringify(this.soilValues.properties.layers[0].depths[0].values['Q0.5']),
+      P:JSON.stringify(this.soilValues.properties.layers[1].depths[0].values['Q0.5']),
+      K :JSON.stringify(this.cookieValues.current.humidity),
       temperature:JSON.stringify(this.cookieValues.current.temp_c),
       humidity:JSON.stringify(this.cookieValues.current.humidity),
-      ph:'',
+      ph:JSON.stringify(this.soilValues.properties.layers[1].depths[0].values['Q0.5']),
       rainfall:JSON.stringify(this.cookieValues.current.precip_mm),
     })
 

@@ -60,6 +60,11 @@ import { MarketPlaceComponent } from './components/components/market-place/marke
 import {MatBadgeModule} from "@angular/material/badge";
 import { DAnalyseComponent } from './components/components/predict-anly/disease/d-analyse/d-analyse.component';
 import { DResultComponent } from './components/components/predict-anly/disease/d-result/d-result.component';
+import { UserPComponent } from './components/components/user-p/user-p.component';
+import { EditTransactionComponent } from './components/components/finance-mgt/components/edit-transaction/edit-transaction.component';
+import { DeleteTransactionComponent } from './components/components/finance-mgt/components/delete-transaction/delete-transaction.component';
+import { EditComponent } from './components/components/colab-fn-c/components/edit/edit.component';
+import { CropDetailsComponent } from './components/components/market-place/components/crop-details/crop-details.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +91,11 @@ import { DResultComponent } from './components/components/predict-anly/disease/d
     MarketPlaceComponent,
     DAnalyseComponent,
     DResultComponent,
+    UserPComponent,
+    EditTransactionComponent,
+    DeleteTransactionComponent,
+    EditComponent,
+    CropDetailsComponent,
   ],
     imports: [
         BrowserModule,

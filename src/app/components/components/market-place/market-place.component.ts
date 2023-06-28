@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {faMoneyBillWave, faStore} from "@fortawesome/free-solid-svg-icons";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FinanceDTO} from "../../dto/financeDTO";
+import * as Notiflix from "notiflix";
+import {MarketplaceService} from "../../services/marketplace.service";
+import {MProductDTO} from "../../dto/MProductDTO";
+import {MAuctionDTO} from "../../dto/MAuctionDTO";
+import {Subscription} from "rxjs";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {CRecommendComponent} from "../predict-anly/crop/c-recommend/c-recommend.component";
+import {CropDetailsComponent} from "./components/crop-details/crop-details.component";
 
 @Component({
   selector: 'app-market-place',
@@ -18,8 +27,10 @@ export class MarketPlaceComponent implements OnInit {
   protected readonly faStore = faStore;
 
   auctionForm!: FormGroup;
+  private allProductsSub!: Subscription;
+  productDetails!: any[];
 
-  constructor() { }
+  constructor(private marketplaceService:MarketplaceService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -94,6 +105,8 @@ export class MarketPlaceComponent implements OnInit {
         Validators.required,
       ]),
     });
+
+    this.getAllItems();
   }
 
 
@@ -123,10 +136,90 @@ export class MarketPlaceComponent implements OnInit {
 
 
   saveProduct() {
-
+    this.marketplaceService.saveProduct(new MProductDTO(
+      this.productForm.get('product_name')?.value,
+      this.productForm.get('category')?.value,
+      this.productForm.get('qty')?.value,
+      this.productForm.get('stock_price')?.value,
+      this.productForm.get('retail_price')?.value,
+      this.productForm.get('imageURL')?.value,
+      this.productForm.get('expire_date')?.value,
+      this.productForm.get('location')?.value,
+      this.productForm.get('min_order')?.value,
+      this.productForm.get('max_order')?.value,
+    )).subscribe(result => {
+      console.log("Product Successfully Added")
+      console.log(result)
+      Notiflix.Notify.success('Product Successfully Added', {
+        position: 'center-bottom'
+      });
+      this.getAllItems();
+      // this.getAllFinance()
+    }, error => {
+      console.log(error)
+      Notiflix.Notify.failure("Product Adding Unsuccessful", {
+        position: 'center-bottom'
+      });
+    });
   }
 
   saveProductAuc() {
+    this.marketplaceService.saveProductAuc(new MAuctionDTO(
+      this.productForm.get('product_name')?.value,
+      this.productForm.get('category')?.value,
+      this.productForm.get('imageURL')?.value,
+      this.productForm.get('qty')?.value,
+      this.productForm.get('expire_dates')?.value,
+      this.productForm.get('location')?.value,
+      this.productForm.get('starting_price')?.value,
+      this.productForm.get('reserve_price')?.value,
+      this.productForm.get('auction_duration')?.value,
+      this.productForm.get('bid_increment')?.value,
+      this.productForm.get('buy_now_price')?.value,
+      this.productForm.get('auctioneer_contact')?.value,
+    )).subscribe(result => {
+      console.log("Product Successfully Added to Auction")
+      console.log(result)
+      Notiflix.Notify.success('Product Successfully Added to Auction', {
+        position: 'center-bottom'
+      });
+      // this.getAllFinance()
+    }, error => {
+      console.log(error)
+      Notiflix.Notify.failure("Product Adding Auction Unsuccessful", {
+        position: 'center-bottom'
+      });
+    });
+  }
 
+
+  getAllItems(){
+    this.allProductsSub = this.marketplaceService.getAllProducts()
+      // .pipe(timeout(4000))
+      .subscribe(result => {
+        console.log(result)
+        // this.dataSource = result.content;
+        this.productDetails = result.content;
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  viewProduct() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = "row";
+    dialogConfig.width = '40%';
+    dialogConfig.height = 'auto';
+    // console.log(row);
+    console.log('----------------------------');
+    const dialogRef = this.dialog.open(CropDetailsComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("response code1")
+      console.log(result)
+      console.log("response code2")
+      // this.refreshTable();
+    });
   }
 }

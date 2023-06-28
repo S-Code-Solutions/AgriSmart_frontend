@@ -100,7 +100,6 @@ export class PredictAnlyComponent implements OnInit {
 
   getWeatherdata(value: any){
     this.climateService.getClimatedata(value).subscribe(res=>{
-      console.log(res)
       this.cookieService.put('Cli', JSON.stringify(res));
     })
   }
@@ -115,8 +114,12 @@ export class PredictAnlyComponent implements OnInit {
 
   getSoilData(lat:any,lon:any){
     this.climateService.getSoiltdata(lat,lon).subscribe(res=>{
+      console.log("=================== getSoilData ==============================")
+      console.log(res)
+      this.cookieService.put('Soil', JSON.stringify(res));
       console.log(res.properties.layers[0].depths[0].values['Q0.5'])
       console.log(res.properties.layers[1].depths[0].values['Q0.5'])
+      console.log("=================== getSoilData ==============================")
     })
   }
 

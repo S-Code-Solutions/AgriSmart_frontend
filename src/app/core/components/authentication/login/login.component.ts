@@ -145,19 +145,22 @@ export class LoginComponent implements OnInit {
 
 
   sendOTP(){
-    this.showAnime = true
-    this.authenticationService.SendOTP(this.LoginForm.get('femail')?.value)
-      .subscribe((result:any) => {
-        if (result.code == '00'){
-          this.showAnime = false
-          this.getOTP();
-          console.log("This is result")
-          console.log(result)
-        }else{
-          this.showAnime = false
-          console.log("This is error")
-        }
-      });
+    Notiflix.Report.failure('Error',
+      '"Invalid email Or existing email"',
+      'Okay');
+    // this.showAnime = true
+    // this.authenticationService.SendOTP(this.LoginForm.get('femail')?.value)
+    //   .subscribe((result:any) => {
+    //     if (result.code == '00'){
+    //       this.showAnime = false
+    //       this.getOTP();
+    //       console.log("This is result")
+    //       console.log(result)
+    //     }else{
+    //       this.showAnime = false
+    //       console.log("This is error")
+    //     }
+    //   });
   }
 
   openDialog(): void {

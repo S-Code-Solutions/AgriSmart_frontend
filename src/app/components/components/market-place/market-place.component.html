@@ -18,7 +18,7 @@
       <div class="d-flex justify-content-between">
         <div>
           <h4 style="font-weight: bold;">Total Products</h4>
-          <p style="font-weight: bold;color: #156AD8; font-size: 40px">2022</p>
+          <p style="font-weight: bold;color: #156AD8; font-size: 40px">4</p>
           <h4 style="color: #B1B1B1;font-size: 14px">During 3 months</h4>
         </div>
         <div></div>
@@ -34,7 +34,7 @@
       <div class="d-flex justify-content-between">
         <div>
           <h4 style="font-weight: bold;">Auction Products</h4>
-          <p style="font-weight: bold; font-size: 40px;color: #40B77F">2022</p>
+          <p style="font-weight: bold; font-size: 40px;color: #40B77F">5</p>
           <h4 style="color: #B1B1B1;font-size: 14px">During 3 months</h4>
         </div>
         <div></div>
@@ -51,7 +51,7 @@
       <div class="d-flex justify-content-between">
         <div>
           <h4 style="font-weight: bold;">Sold Products</h4>
-          <p style="font-weight: bold; font-size: 40px;color: #F3931B">2022</p>
+          <p style="font-weight: bold; font-size: 40px;color: #F3931B">2</p>
           <h4 style="color: #B1B1B1;font-size: 14px">During 3 months</h4>
         </div>
         <div></div>
@@ -70,17 +70,127 @@
   <mat-tab-group dynamicHeight>
 
     <mat-tab label="View Products">
-      <div class=" mat-elevation-z4 d-flex flex-column">
-        <h4 style="font-weight: bold; font-size: 1.5rem;color: #209F2E" class="ms-4 mt-3">View Products</h4>
-        <div class="d-flex justify-content-between mt-3 ms-3">
-          <div class="p-2">Flex item 1</div>
-          <div class="p-2">Flex item 2</div>
-          <div class="p-2">Flex item 3</div>
-          <div class="p-2">Flex item 1</div>
-          <div class="p-2">Flex item 2</div>
-          <div class="p-2">Flex item 3</div>
+      <section class="mt-4 mb-5">
+        <h3 style="font-weight: bold; font-size: 1.5rem;color: #209F2E" class="mt-3 ms-4">View Products</h3>
+        <div class="row ms-2 me-2">
+          <div  class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 p-2 justify-content-center align-items-center text-center">
+                <div class="p-2" style="background: white">
+                  <div class="d-flex flex-column box-hover-style" >
+                    <div class="p-2">
+                      <img src="https://i.ibb.co/5jd3jpS/ezgif-com-webp-to-jpg-2.jpg" alt="ezgif-com-webp-to-jpg-2" border="0">
+                    </div>
+                    <div class="">
+                      <p>Vegeatbles</p>
+                    </div>
+                    <div class="">
+                      <h6>Sapa Fresh Pumpkin</h6>
+                    </div>
+                    <div class="p-2">
+                      <h6 style="color: #49A010">Rs.53.00</h6>
+                    </div>
+                    <div class="p-2">
+                      <div class="d-flex flex-row justify-content-center align-items-center text-center">
+                        <div>
+<!--                          <mat-icon aria-hidden="false" aria-label="Example favorite icon" fontIcon="favorite">favorite</mat-icon>-->
+                        </div>&nbsp;&nbsp;
+                        <div>
+                          <button style="background: #49A010;color: white; border-radius: 10px" (click)="viewProduct()" mat-raised-button color="primary">View Product</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 p-2 justify-content-center align-items-center text-center" >
+                <div class="p-2" style="background: white">
+                  <div class="d-flex flex-column box-hover-style" >
+                    <div class="p-2">
+                      <img src="https://i.ibb.co/RQYWZX8/ezgif-com-webp-to-jpg-3.jpg" alt="ezgif-com-webp-to-jpg-3" border="0">
+                    </div>
+                    <div class="">
+                      <p>Vegeatbles</p>
+                    </div>
+                    <div class="">
+                      <h6>Sapa Fresh Pumpkin</h6>
+                    </div>
+                    <div class="p-2">
+                      <h6 style="color: #49A010">$53.00</h6>
+                    </div>
+                    <div class="p-2">
+                      <div class="d-flex flex-row justify-content-center align-items-center text-center">
+                        <div>
+<!--                          <mat-icon aria-hidden="false" aria-label="Example favorite icon" fontIcon="favorite">favorite</mat-icon>-->
+                        </div>&nbsp;&nbsp;
+                        <div>
+                          <button style="background: #49A010;color: white; border-radius: 10px" mat-raised-button (click)="viewProduct()" color="primary">View Product</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 p-2 justify-content-center align-items-center text-center" >
+                <div class="p-2" style="background: white">
+                  <div class="d-flex flex-column box-hover-style" >
+                    <div class="p-2">
+                      <img src="https://i.ibb.co/pbzcrt8/ezgif-com-webp-to-jpg-4.jpg" alt="ezgif-com-webp-to-jpg-4" border="0">
+                    </div>
+                    <div class="">
+                      <p>Vegeatbles</p>
+                    </div>
+                    <div class="">
+                      <h6>Sapa Fresh Pumpkin</h6>
+                    </div>
+                    <div class="p-2">
+                      <h6 style="color: #49A010">$53.00</h6>
+                    </div>
+                    <div class="p-2">
+                      <div class="d-flex flex-row justify-content-center align-items-center text-center">
+                        <div>
+<!--                          <mat-icon aria-hidden="false" aria-label="Example favorite icon" fontIcon="favorite">favorite</mat-icon>-->
+                        </div>&nbsp;&nbsp;
+                        <div>
+                          <button style="background: #49A010;color: white; border-radius: 10px" mat-raised-button (click)="viewProduct()" color="primary">View Product</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 p-2 justify-content-center align-items-center text-center" >
+                <div class="p-2" style="background: white">
+                  <div class="d-flex flex-column box-hover-style" >
+                    <div class="p-2">
+                      <img src="https://i.ibb.co/9GrpHPc/ezgif-com-webp-to-jpg-5.jpg" alt="ezgif-com-webp-to-jpg-5" border="0">
+                    </div>
+                    <div class="">
+                      <p>Vegeatbles</p>
+                    </div>
+                    <div class="">
+                      <h6>Sapa Fresh Pumpkin</h6>
+                    </div>
+                    <div class="p-2">
+                      <h6 style="color: #49A010">$53.00</h6>
+                    </div>
+                    <div class="p-2">
+                      <div class="d-flex flex-row justify-content-center align-items-center text-center">
+                        <div>
+<!--                          <mat-icon aria-hidden="false" aria-label="Example favorite icon" fontIcon="favorite">favorite</mat-icon>-->
+                        </div>&nbsp;&nbsp;
+                        <div>
+                          <button style="background: #49A010;color: white; border-radius: 10px" mat-raised-button (click)="viewProduct()" color="primary">View Product</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </mat-tab>
 
     <mat-tab label="Add new Product">

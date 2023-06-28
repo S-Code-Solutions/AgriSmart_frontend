@@ -197,28 +197,28 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
 
     this.plantingDtailForm = new FormGroup({
       plantMethod: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[a-zA-Z0-9\\s\\W]+$')
       ]),
       planting_location: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[a-zA-Z0-9\\s\\W]+$')
       ]),
       planting_density: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[0-9]+$')
       ]),
       seeding_rate: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[0-9]+$')
       ]),
       seeding_depth: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[0-9]+$')
       ]),
       soil_preparation: new FormControl('', [
-        Validators.required, Validators.pattern('^[a-zA-Z]+$')
+        Validators.required, Validators.pattern('^[a-zA-Z0-9\\s\\W]+$')
       ]),
       planting_date: new FormControl('', [
         Validators.required
       ]),
       water_duration: new FormControl('', [
-        Validators.required
+        Validators.required, Validators.pattern('^[0-9]+$')
       ]),
     })
 
@@ -829,6 +829,7 @@ export class CropManageComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
   saveFSchedule() {
+    console.log(this.cropId)
     this.plantManageService.saveFertilize(new FertilizingDTO(
       this.FertilizeForm.get('fertilize_name')?.value,
       this.FertilizeForm.get('fertilizer_type')?.value,

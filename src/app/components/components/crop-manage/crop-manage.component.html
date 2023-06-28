@@ -25,8 +25,8 @@
       <mat-icon aria-hidden="false" aria-label="Example expand_more icon" fontIcon="expand_more">expand_more</mat-icon>
     </button>
     <mat-menu #belowMenu="matMenu" yPosition="below">
-      <button mat-menu-item *ngFor="let item of ofListofCrops" (click)="getCropLists(item.crop_name, item.crop_id)">
-        {{ item.crop_name }}
+      <button mat-menu-item *ngFor="let item of ofListofCrops" (click)="getCropLists(item.crop_name, item.crop_id)" class="listhv">
+        &nbsp;{{ item.crop_name }}
       </button>
     </mat-menu>
 
@@ -36,8 +36,8 @@
       <mat-icon aria-hidden="false" aria-label="Example expand_more icon" fontIcon="expand_more">expand_more</mat-icon>
     </button>
     <mat-menu #belowMenus="matMenu" yPosition="below">
-      <button mat-menu-item *ngFor="let item of ofListofCropss" (click)="getDtailLists(item,cropName)">
-        {{cropName}}&nbsp;-&nbsp;{{ item }}
+      <button mat-menu-item *ngFor="let item of ofListofCropss" (click)="getDtailLists(item,cropName)" class="listhv">
+        &nbsp;{{cropName}}&nbsp;-&nbsp;{{ item }}
       </button>
     </mat-menu>
 
@@ -506,14 +506,14 @@
               <img src="https://i.ibb.co/KLLNcxH/crop-2-01.jpg" alt="crop-2-01" style="width: 155px;">
             </div>
             <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 d-flex flex-column">
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.plantMethod}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.planting_location}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.planting_density}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.seeding_rate}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.seeding_depth}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.soil_preparation}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.planting_date}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{plants.water_duration}}</h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Plant Method - <span style="color: #27ae60">{{plants.plantMethod}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Planting Location - <span style="color: #27ae60">{{plants.planting_location}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Planting_density - <span style="color: #27ae60">{{plants.planting_density}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Seeding Rate - <span style="color: #27ae60">{{plants.seeding_rate}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Seeding Depth - <span style="color: #27ae60">{{plants.seeding_depth}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Soil Preparation - <span style="color: #27ae60">{{plants.soil_preparation}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Planting Date - <span style="color: #27ae60">{{plants.planting_date}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px"> Water Duration - <span style="color: #27ae60">{{plants.water_duration}}</span></h6>
             </div>
           </div>
         </div>
@@ -534,15 +534,15 @@
               <img src="https://i.ibb.co/KLLNcxH/crop-2-01.jpg" alt="crop-2-01" style="width: 155px;">
             </div>
             <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 d-flex flex-column">
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertilize_name}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertilizer_type}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertilizer_app_method}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertilizer_app_fre}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.application_rate}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertilizer_placement}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.application_timing}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertigation}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{ferts.fertlizing_date}}</h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertilize Name - <span style="color: #27ae60">{{ferts.fertilize_name}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertilizer Type - <span style="color: #27ae60">{{ferts.fertilizer_type}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertilizer App Method - <span style="color: #27ae60">{{ferts.fertilizer_app_method}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertilizer App Fre - <span style="color: #27ae60">{{ferts.fertilizer_app_fre}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Application Rate - <span style="color: #27ae60">{{ferts.application_rate}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertilizer Placement - <span style="color: #27ae60">{{ferts.fertilizer_placement}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Application Timing - <span style="color: #27ae60">{{ferts.application_timing}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertigation - <span style="color: #27ae60">{{ferts.fertigation}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Fertlizing Date - <span style="color: #27ae60">{{ferts.fertlizing_date}}</span></h6>
             </div>
           </div>
         </div>
@@ -563,14 +563,14 @@
               <img src="https://i.ibb.co/KLLNcxH/crop-2-01.jpg" alt="crop-2-01" style="width: 155px;">
             </div>
             <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 d-flex flex-column">
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvest_method}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvesting_equipment}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.labor_requirement}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.storage_requirement}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvest_quality}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvest_cost}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvest_waste}}</h6>
-              <h6 class="me-3 mt-3 h6 mat-h6">{{harvest.harvesting_date}}</h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvest Method - <span style="color: #27ae60">{{harvest.harvest_method}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvesting Equipment - <span style="color: #27ae60">{{harvest.harvesting_equipment}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Labor Requirement - <span style="color: #27ae60">{{harvest.labor_requirement}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Storage Requirement - <span style="color: #27ae60">{{harvest.storage_requirement}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvest Quality - <span style="color: #27ae60">{{harvest.harvest_quality}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvest Cost - <span style="color: #27ae60">{{harvest.harvest_cost}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvest Waste - <span style="color: #27ae60">{{harvest.harvest_waste}}</span></h6>
+              <h6 class="me-3 mt-3" style="font-weight: bold; font-size: 20px">Harvesting Date - <span style="color: #27ae60">{{harvest.harvesting_date}}</span></h6>
             </div>
           </div>
         </div>

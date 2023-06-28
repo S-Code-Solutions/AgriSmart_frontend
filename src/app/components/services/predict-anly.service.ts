@@ -17,6 +17,14 @@ export class PredictAnlyService {
     })
   }
 
+  get7DaysClimatedata(value: any):Observable<any>  {
+    return this.http.post('http://api.weatherapi.com/v1/forecast.json?key=59a2ab65a150489db6c122100230304 &q='+value+'&days=5&aqi=no&alerts=yes', {
+      headers:new HttpHeaders({
+
+      })
+    })
+  }
+
 
   getLangtdata(value: any):Observable<any>  {
     return this.http.post('https://nominatim.openstreetmap.org/search?q='+value+', Sri Lanka&format=json', {

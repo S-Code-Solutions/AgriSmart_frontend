@@ -15,6 +15,7 @@ export class FRecommendComponent implements OnInit {
 
   FRForm!: FormGroup;
   cookieValues :any
+  soilValues:any
 
   constructor(public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -54,14 +55,15 @@ export class FRecommendComponent implements OnInit {
       ])
     });
     this.cookieValues = JSON.parse(this.cookieService.get('Cli'));
+    this.soilValues = JSON.parse(this.cookieService.get('Soil'));
     console.log(this.cookieValues)
     this.FRForm.setValue({
-      Nitrogen:'',
-      Phosphorous:'',
-      Potassium :'',
+      Nitrogen:JSON.stringify(this.soilValues.properties.layers[0].depths[0].values['Q0.5']),
+      Phosphorous:JSON.stringify(this.soilValues.properties.layers[1].depths[0].values['Q0.5']),
+      Potassium :JSON.stringify(this.cookieValues.current.humidity),
       Temparature:JSON.stringify(this.cookieValues.current.temp_c),
       Humidity:JSON.stringify(this.cookieValues.current.humidity),
-      Moisture:'',
+      Moisture:JSON.stringify(this.cookieValues.current.temp_c),
       soil_type:'',
       crop_type:''
     })

@@ -14,7 +14,7 @@ export class FRecommendService {
   constructor(private http: HttpClient) { }
 
   getFertData(fertDTO: FertDTO):Observable<any>  {
-    return this.http.post(this.Url+'/predict_fertilizer', {
+    return this.http.post('http://localhost:5000/predict_fertilizer', {
       Nitrogen: fertDTO.Nitrogen,
       Phosphorous: fertDTO.Phosphorous,
       Potassium: fertDTO.Potassium,
